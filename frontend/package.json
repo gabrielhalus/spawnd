@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.7",
+    "@tanstack/react-router": "^1.120.10",
+    "@tanstack/react-router-devtools": "^1.120.10",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.511.0",
@@ -21,6 +23,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@tanstack/router-plugin": "^1.120.10",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
