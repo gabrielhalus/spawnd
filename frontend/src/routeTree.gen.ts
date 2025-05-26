@@ -11,9 +11,23 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as ServersImport } from './routes/servers'
+import { Route as CreateServerImport } from './routes/create-server'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const ServersRoute = ServersImport.update({
+  id: '/servers',
+  path: '/servers',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CreateServerRoute = CreateServerImport.update({
+  id: '/create-server',
+  path: '/create-server',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -32,6 +46,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/create-server': {
+      id: '/create-server'
+      path: '/create-server'
+      fullPath: '/create-server'
+      preLoaderRoute: typeof CreateServerImport
+      parentRoute: typeof rootRoute
+    }
+    '/servers': {
+      id: '/servers'
+      path: '/servers'
+      fullPath: '/servers'
+      preLoaderRoute: typeof ServersImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -39,32 +67,42 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/create-server': typeof CreateServerRoute
+  '/servers': typeof ServersRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/create-server': typeof CreateServerRoute
+  '/servers': typeof ServersRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/create-server': typeof CreateServerRoute
+  '/servers': typeof ServersRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/create-server' | '/servers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/create-server' | '/servers'
+  id: '__root__' | '/' | '/create-server' | '/servers'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CreateServerRoute: typeof CreateServerRoute
+  ServersRoute: typeof ServersRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CreateServerRoute: CreateServerRoute,
+  ServersRoute: ServersRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +115,19 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/create-server",
+        "/servers"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/create-server": {
+      "filePath": "create-server.tsx"
+    },
+    "/servers": {
+      "filePath": "servers.tsx"
     }
   }
 }
