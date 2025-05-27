@@ -13,7 +13,7 @@ import { mkdirSync, existsSync } from "fs";
 const args = Bun.argv.slice(2); // skip "bun", "run", "scripts/deploy.ts"
 const subcommand = args[0];
 
-const exclude = ["uploads", "logs", ".env"];
+const exclude = ["uploads", "logs", ".env", "sqlite.db"];
 
 const localServerFiles = [
   "server",
@@ -26,7 +26,11 @@ const localServerFiles = [
 const localClientFiles = ["frontend/dist", "frontend/public"];
 
 function ensureLocalDirsExist() {
-  const requiredDirs: string[] = [];
+  const requiredDirs: string[] = [
+    ...localServerFiles,
+    ...localClientFiles,
+    "sqlite.db",
+  ];
   for (const dir of requiredDirs) {
     if (!existsSync(dir)) {
       logInfo(`Directory '${dir}' does not exist. Creating...`);
@@ -97,6 +101,7 @@ async function pushFiles() {
 
   await push("Server files", localServerFiles, remotePath);
   await push("Frontend files", localClientFiles, `${remotePath}/frontend`);
+  await push("SQLite DB", ["sqlite.db"], `${remotePath}/db`);
 }
 
 async function restartDocker() {
