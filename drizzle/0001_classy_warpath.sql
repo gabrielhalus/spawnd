@@ -1,0 +1,1 @@
+ALTER TABLE `servers` ADD `createdAt` text DEFAULT CURRENT_TIMESTAMP NOT NULL;

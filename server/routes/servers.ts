@@ -1,10 +1,9 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono/tiny";
-import { z } from "zod";
-
-const createServerSchema = z.object({
-  name: z.string(),
-});
+import { createServerSchema } from "../shared/servers";
+import { insertServerSchema, serversTable } from "../db/schemas/servers";
+import { db } from "../db";
+import { eq } from "drizzle-orm";
 
 interface Server {
   id: number;
@@ -31,26 +30,34 @@ export const serversRoute = new Hono()
     return c.json({ servers: fakeServers });
   })
 
-  .get("/:id", async (c) => {
-    const id = Number.parseInt(c.req.param("id"));
-    const server = fakeServers.find((s) => s.id === id);
-
-    if (!server) {
-      return c.notFound();
-    }
-
-    return c.json({ server });
-  })
-
   .post("/", zValidator("json", createServerSchema), async (c) => {
     const server = c.req.valid("json");
 
-    fakeServers.push({
-      id: fakeServers.length,
-      name: server.name,
-      meta: {},
+    const validatedServer = insertServerSchema.parse({
+      ...server,
     });
 
+    const result = await db
+      .insert(serversTable)
+      .values(validatedServer)
+      .returning();
+
     c.status(201);
-    return c.json({});
+    return c.json(result);
+  })
+
+  .delete("/:id{[0-9]+}", async (c) => {
+    const id = Number.parseInt(c.req.param("id"));
+
+    const deletedServer = await db
+      .delete(serversTable)
+      .where(eq(serversTable.id, id))
+      .returning()
+      .then((res) => res[0]);
+
+    if (!deletedServer) {
+      return c.notFound();
+    }
+
+    return c.json(deletedServer);
   });
