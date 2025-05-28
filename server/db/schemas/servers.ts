@@ -1,10 +1,13 @@
 import { sql } from "drizzle-orm";
-import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
+import { nanoid } from "../../lib/nanoid";
 
 export const serversTable = sqliteTable("servers", {
-  id: integer("id").primaryKey(),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => nanoid()),
   name: text("name").notNull(),
   type: text("type", { enum: ["vanilla"] }).notNull(),
   version: text("version").notNull(),

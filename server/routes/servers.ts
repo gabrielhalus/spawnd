@@ -32,8 +32,8 @@ export const serversRoute = new Hono()
     return c.json(result);
   })
 
-  .delete("/:id{[0-9]+}", async (c) => {
-    const id = Number.parseInt(c.req.param("id"));
+  .delete("/:id", async (c) => {
+    const id = c.req.param("id");
 
     const deletedServer = await db
       .delete(serversTable)
