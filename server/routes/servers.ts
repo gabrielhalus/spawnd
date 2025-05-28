@@ -3,31 +3,17 @@ import { Hono } from "hono/tiny";
 import { createServerSchema } from "../shared/servers";
 import { insertServerSchema, serversTable } from "../db/schemas/servers";
 import { db } from "../db";
-import { eq } from "drizzle-orm";
-
-interface Server {
-  id: number;
-  name: string;
-  meta: object;
-}
-
-const fakeServers: Server[] = [
-  {
-    id: 0,
-    name: "Server 1",
-    meta: {},
-  },
-  {
-    id: 1,
-    name: "Server 2",
-    meta: {},
-  },
-];
+import { desc, eq } from "drizzle-orm";
 
 export const serversRoute = new Hono()
 
   .get("/", async (c) => {
-    return c.json({ servers: fakeServers });
+    const servers = await db
+      .select()
+      .from(serversTable)
+      .orderBy(desc(serversTable.createdAt));
+
+    return c.json({ servers });
   })
 
   .post("/", zValidator("json", createServerSchema), async (c) => {
