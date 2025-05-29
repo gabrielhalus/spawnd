@@ -31,6 +31,8 @@ FROM base
 # Copy build application
 COPY --from=build /app /app
 
+RUN bun run db:migrate
+
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD [ "bun", "run", "start" ]
+CMD bun run db:migrate && bun run start

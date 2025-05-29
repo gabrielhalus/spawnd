@@ -1,3 +1,4 @@
+import readline from "readline";
 import {
   remoteUser,
   remoteHost,
@@ -20,13 +21,62 @@ if (!remoteUser || !remoteHost || !remotePath) {
 if (!subcommand || !argument) {
   logError("Usage:");
   console.log("  bun secrets set VARIABLE='value'");
+  console.log("  bun secrets set VARIABLE   # prompts for value");
   console.log("  bun secrets get VARIABLE");
   console.log("  bun secrets remove VARIABLE");
   process.exit(1);
 }
 
-const [key, ...valueParts] = argument.split("=");
-const value = valueParts.join("=");
+// Hidden prompt for sensitive values
+function promptHidden(query: string): Promise<string> {
+  return new Promise((resolve) => {
+    process.stdout.write(query);
+
+    let input = "";
+    const onData = (chunk: Buffer) => {
+      const char = chunk.toString();
+
+      if (char === "\r" || char === "\n") {
+        process.stdout.write("\n");
+        process.stdin.setRawMode?.(false);
+        process.stdin.pause();
+        process.stdin.removeListener("data", onData);
+        resolve(input);
+      } else if (char === "\u0003") {
+        // Ctrl+C
+        process.stdout.write("\n");
+        process.stdin.setRawMode?.(false);
+        process.stdin.pause();
+        process.stdin.removeListener("data", onData);
+        process.exit(130);
+      } else if (char === "\x7f") {
+        // Backspace
+        if (input.length > 0) {
+          input = input.slice(0, -1);
+          // Erase last '*' from terminal
+          process.stdout.write("\b \b");
+        }
+      } else {
+        input += char;
+        process.stdout.write("*");
+      }
+    };
+
+    process.stdin.setRawMode?.(true);
+    process.stdin.resume();
+    process.stdin.on("data", onData);
+  });
+}
+
+const [key, ...valueParts] = argument.includes("=")
+  ? argument.split("=")
+  : [argument];
+
+let value = valueParts.join("=");
+
+if (subcommand === "set" && !value) {
+  value = await promptHidden(`Enter value for ${key}: `);
+}
 
 function escapeShellValue(val: string): string {
   return `'${val.replace(/'/g, `'\\''`)}'`;

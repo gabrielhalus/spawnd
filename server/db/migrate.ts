@@ -1,14 +1,23 @@
 import { Database } from "bun:sqlite";
-import { readdirSync, readFileSync } from "fs";
-import { join } from "path";
+import fs from "fs";
+import { dirname, join, resolve } from "path";
 
-const db = new Database("sqlite.db");
+const rawDbPath = process.env.DATABASE_URL!;
+const dbPath = resolve(process.cwd(), rawDbPath);
+
+if (!fs.existsSync(dbPath)) {
+  const dir = dirname(dbPath);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(dbPath, "");
+}
+
+const db = new Database(dbPath!);
 
 const migrationFolder = "./drizzle";
-const files = readdirSync(migrationFolder).filter((f) => f.endsWith(".sql"));
+const files = fs.readdirSync(migrationFolder).filter((f) => f.endsWith(".sql"));
 
 for (const file of files.sort()) {
-  const sql = readFileSync(join(migrationFolder, file), "utf8");
+  const sql = fs.readFileSync(join(migrationFolder, file), "utf8");
   db.exec(sql);
   console.log(`✅ Applied migration: ${file}`);
 }

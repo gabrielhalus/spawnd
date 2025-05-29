@@ -13,10 +13,11 @@ import { mkdirSync, existsSync } from "fs";
 const args = Bun.argv.slice(2); // skip "bun", "run", "scripts/deploy.ts"
 const subcommand = args[0];
 
-const exclude = ["uploads", "logs", ".env", "sqlite.db"];
+const exclude = ["uploads", "logs", ".env", "data"];
 
 const localServerFiles = [
   "server",
+  "drizzle",
   "bun.lock",
   "package.json",
   "tsconfig.json",
@@ -26,11 +27,7 @@ const localServerFiles = [
 const localClientFiles = ["frontend/dist", "frontend/public"];
 
 function ensureLocalDirsExist() {
-  const requiredDirs: string[] = [
-    ...localServerFiles,
-    ...localClientFiles,
-    "sqlite.db",
-  ];
+  const requiredDirs: string[] = [...localServerFiles, ...localClientFiles];
   for (const dir of requiredDirs) {
     if (!existsSync(dir)) {
       logInfo(`Directory '${dir}' does not exist. Creating...`);
@@ -101,11 +98,33 @@ async function pushFiles() {
 
   await push("Server files", localServerFiles, remotePath);
   await push("Frontend files", localClientFiles, `${remotePath}/frontend`);
-  await push("SQLite DB", ["sqlite.db"], `${remotePath}/db`);
 }
 
-async function restartDocker() {
+async function dockerRestart() {
   logSection("Restarting Docker");
+
+  const sshCommand = `cd ${remotePath} && docker compose restart`;
+
+  const proc = Bun.spawn(["ssh", `${remoteUser}@${remoteHost}`, sshCommand], {
+    stdout: "pipe",
+    stderr: "pipe",
+  });
+
+  const stdout = await Bun.readableStreamToText(proc.stdout!);
+  const stderr = await Bun.readableStreamToText(proc.stderr!);
+
+  await proc.exited;
+
+  if (proc.exitCode !== 0) {
+    logError("Docker restart failed.");
+    if (stderr) logError(`Error output:\n${stderr}`);
+    throw new Error("Docker restart failed.");
+  }
+  logSuccess("Docker restarted.");
+}
+
+async function dockerUp() {
+  logSection("Stopping and starting Docker (down + up --build -d)");
 
   const sshCommand = `cd ${remotePath} && docker compose down && docker compose up --build -d`;
 
@@ -114,17 +133,49 @@ async function restartDocker() {
     stderr: "pipe",
   });
 
+  const stdout = await Bun.readableStreamToText(proc.stdout!);
+  const stderr = await Bun.readableStreamToText(proc.stderr!);
+
   await proc.exited;
 
-  if (proc.exitCode !== 0) throw new Error("Docker restart failed.");
-  logSuccess("Docker restarted.");
+  if (proc.exitCode !== 0) {
+    logError("Docker up command failed.");
+    if (stderr) logError(`Error output:\n${stderr}`);
+    throw new Error("Docker up command failed.");
+  }
+  logSuccess("Docker containers stopped and restarted.");
+}
+
+async function dockerDown() {
+  logSection("Stopping Docker containers");
+
+  const sshCommand = `cd ${remotePath} && docker compose down`;
+
+  const proc = Bun.spawn(["ssh", `${remoteUser}@${remoteHost}`, sshCommand], {
+    stdout: "pipe",
+    stderr: "pipe",
+  });
+
+  const stdout = await Bun.readableStreamToText(proc.stdout!);
+  const stderr = await Bun.readableStreamToText(proc.stderr!);
+
+  await proc.exited;
+
+  if (proc.exitCode !== 0) {
+    logError("Docker down command failed.");
+    if (stderr) {
+      logError(`Error output:\n${stderr}`);
+    }
+    throw new Error("Docker down command failed.");
+  }
+  logSuccess("Docker containers stopped.");
 }
 
 async function deploy() {
   logSection("Starting full deployment");
   await cleanRemote();
   await pushFiles();
-  await restartDocker();
+  await dockerUp();
   logSuccess("Deployment complete.");
 }
 
@@ -143,7 +194,10 @@ async function deploy() {
         await pushFiles();
         break;
       case "restart":
-        await restartDocker();
+        await dockerRestart();
+        break;
+      case "down":
+        await dockerUp();
         break;
       default:
         logError(`Unknown subcommand: ${subcommand}`);
