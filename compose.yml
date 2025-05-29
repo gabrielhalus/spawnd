@@ -4,7 +4,6 @@ services:
       context: .
       dockerfile: Dockerfile
       network: host
-    container_name: web
     ports:
       - 3000:3000
     restart: unless-stopped
