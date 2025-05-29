@@ -1,58 +1,48 @@
-import * as React from "react";
+import { useFieldContext } from "@/hooks/form-context";
 
 import { cn } from "@/lib/utils";
-
 import { Card, CardDescription, CardHeader, CardTitle } from "./card";
 import { Check } from "lucide-react";
 
-export type GridSelectOption<T = string> = {
+export type SelectOption<T = string> = {
   label: string;
   value: T;
   description?: string;
 };
 
-type GridSelectProps<T = string> = {
-  options: GridSelectOption<T>[];
-  value?: T;
-  onChange?: (value: T) => void;
+export type SelectFieldProps<T = string> = {
+  options: SelectOption<T>[];
+  label?: string;
   cols?: number;
-  name?: string;
   disabled?: boolean;
   className?: string;
 };
 
-function GridSelect<T = string>({
+function SelectField<T = string>({
   options,
-  value,
-  onChange,
+  label,
   cols = 3,
-  name,
   disabled = false,
   className,
-}: GridSelectProps<T>) {
-  const [internalValue, setInternalValue] = React.useState<T | undefined>(
-    value,
-  );
+}: SelectFieldProps<T>) {
+  const field = useFieldContext<T>();
+  const selectedValue = field.state.value;
 
   const handleSelect = (val: T) => {
-    setInternalValue(val);
-    onChange?.(val);
+    if (!disabled) {
+      field.handleChange(val);
+    }
   };
 
   return (
     <div className={cn("space-y-2", className)}>
-      {name && value != null && (
-        <input type="hidden" name={name} value={String(value)} />
-      )}
-
+      {label && <div className="font-medium">{label}</div>}
       <div
         className="grid gap-4"
-        style={{
-          gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-        }}
+        style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
       >
         {options.map((opt) => {
-          const isSelected = opt.value === internalValue;
+          const isSelected = opt.value === selectedValue;
           return (
             <Card
               key={String(opt.value)}
@@ -68,7 +58,7 @@ function GridSelect<T = string>({
                 <CardDescription>{opt.description}</CardDescription>
               </CardHeader>
               {isSelected && (
-                <span className="absolute right-2 bottom-2 h-5 w-5 rounded-full bg-primary grid place-items-center transition">
+                <span className="absolute right-1.5 bottom-1.5 h-5 w-5 rounded-full bg-primary grid place-items-center">
                   <Check className="text-primary-foreground h-3 w-3 stroke-3" />
                 </span>
               )}
@@ -80,4 +70,4 @@ function GridSelect<T = string>({
   );
 }
 
-export { GridSelect };
+export { SelectField };

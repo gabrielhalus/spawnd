@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/servers")({
-  component: RouteComponent,
+  component: Servers,
 });
 
 async function getAllServers() {
@@ -15,7 +15,7 @@ async function getAllServers() {
   return data;
 }
 
-function RouteComponent() {
+function Servers() {
   const { isPending, error, data } = useQuery({
     queryKey: ["get-all-servers"],
     queryFn: getAllServers,
