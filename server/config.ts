@@ -13,5 +13,5 @@ export const CONFIG = {
   },
 
   // Supported Minecraft server types
-  SERVER_TYPES: ["vanilla", "fabric", "paper", "forge"] as const,
+  SERVER_TYPES: ["vanilla", "fabric", "paper", "neoforge"] as const,
 };
