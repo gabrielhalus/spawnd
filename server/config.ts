@@ -11,4 +11,7 @@ export const CONFIG = {
   LIMITS: {
     mojangVersions: 5,
   },
+
+  // Supported Minecraft server types
+  SERVER_TYPES: ["vanilla", "fabric", "paper", "forge"] as const,
 };
