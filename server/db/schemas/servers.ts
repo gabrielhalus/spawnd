@@ -12,6 +12,19 @@ export const serversTable = sqliteTable("servers", {
   name: text("name").notNull(),
   type: text("type").notNull(),
   version: text("version").notNull(),
+  status: text("status", {
+    enum: [
+      "stopped",
+      "starting",
+      "running",
+      "stopping",
+      "crashed",
+      "restarting",
+      "pending",
+    ],
+  })
+    .notNull()
+    .default("pending"),
   createdAt: text("createdAt")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),

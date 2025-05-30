@@ -4,5 +4,7 @@ import { insertServerSchema, ServerTypeEnum } from "../db/schemas/servers";
 export type ServerType = z.infer<typeof ServerTypeEnum>;
 
 export const createServerSchema = insertServerSchema.omit({
+  id: true,
+  status: true,
   createdAt: true,
 });

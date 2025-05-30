@@ -1,55 +1,9 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "9fa3b580-3e82-4dce-9755-2bf9acd0cdc3",
-  "prevId": "691ac958-3ae6-47f7-bbcf-0f9a9bf1d258",
+  "id": "27609861-5be8-4b7e-b28e-07b43c9c9299",
+  "prevId": "9fa3b580-3e82-4dce-9755-2bf9acd0cdc3",
   "tables": {
-    "server_types": {
-      "name": "server_types",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "index": {
-          "name": "index",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "description": {
-          "name": "description",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "server_types_index_unique": {
-          "name": "server_types_index_unique",
-          "columns": [
-            "index"
-          ],
-          "isUnique": true
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
     "servers": {
       "name": "servers",
       "columns": {
@@ -80,6 +34,14 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'pending'"
         },
         "createdAt": {
           "name": "createdAt",
