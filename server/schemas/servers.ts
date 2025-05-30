@@ -18,9 +18,10 @@ export const serversTable = sqliteTable("servers", {
       "starting",
       "running",
       "stopping",
-      "crashed",
+      "error",
       "restarting",
       "pending",
+      "installing",
     ],
   })
     .notNull()

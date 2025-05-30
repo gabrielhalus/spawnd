@@ -97,21 +97,6 @@ function CreateServer() {
                     value: "vanilla",
                     description: "Default Minecraft Server",
                   },
-                  {
-                    label: "Paper",
-                    value: "paper",
-                    description: "Minecraft Server with Plugins",
-                  },
-                  {
-                    label: "Fabric",
-                    value: "fabric",
-                    description: "Minecraft Server with Mods",
-                  },
-                  {
-                    label: "NeoForge",
-                    value: "neoforge",
-                    description: "Minecraft Server with Mods",
-                  },
                 ]}
                 cols={4}
               />

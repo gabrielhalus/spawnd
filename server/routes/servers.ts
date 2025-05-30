@@ -2,7 +2,7 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { createServerSchema } from "../shared/servers";
 import { insertServerSchema, serversTable } from "../schemas/servers";
-import { db } from "../db";
+import { db } from "../lib/db";
 import { desc, eq } from "drizzle-orm";
 
 const app = new Hono()

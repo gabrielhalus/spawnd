@@ -43,6 +43,7 @@ function Servers() {
                 <CardDescription>
                   {server.type} - {server.version}
                 </CardDescription>
+                <CardDescription>{server.status}</CardDescription>
               </CardHeader>
             </Card>
           ))}
