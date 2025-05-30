@@ -11,17 +11,12 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as ServersImport } from './routes/servers'
 import { Route as CreateServerImport } from './routes/create-server'
 import { Route as IndexImport } from './routes/index'
+import { Route as ServersIndexImport } from './routes/servers/index'
+import { Route as ServersServerIdImport } from './routes/servers/$serverId'
 
 // Create/Update Routes
-
-const ServersRoute = ServersImport.update({
-  id: '/servers',
-  path: '/servers',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const CreateServerRoute = CreateServerImport.update({
   id: '/create-server',
@@ -32,6 +27,18 @@ const CreateServerRoute = CreateServerImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ServersIndexRoute = ServersIndexImport.update({
+  id: '/servers/',
+  path: '/servers/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ServersServerIdRoute = ServersServerIdImport.update({
+  id: '/servers/$serverId',
+  path: '/servers/$serverId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -53,11 +60,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CreateServerImport
       parentRoute: typeof rootRoute
     }
-    '/servers': {
-      id: '/servers'
+    '/servers/$serverId': {
+      id: '/servers/$serverId'
+      path: '/servers/$serverId'
+      fullPath: '/servers/$serverId'
+      preLoaderRoute: typeof ServersServerIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/servers/': {
+      id: '/servers/'
       path: '/servers'
       fullPath: '/servers'
-      preLoaderRoute: typeof ServersImport
+      preLoaderRoute: typeof ServersIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -68,41 +82,46 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/create-server': typeof CreateServerRoute
-  '/servers': typeof ServersRoute
+  '/servers/$serverId': typeof ServersServerIdRoute
+  '/servers': typeof ServersIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/create-server': typeof CreateServerRoute
-  '/servers': typeof ServersRoute
+  '/servers/$serverId': typeof ServersServerIdRoute
+  '/servers': typeof ServersIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/create-server': typeof CreateServerRoute
-  '/servers': typeof ServersRoute
+  '/servers/$serverId': typeof ServersServerIdRoute
+  '/servers/': typeof ServersIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/create-server' | '/servers'
+  fullPaths: '/' | '/create-server' | '/servers/$serverId' | '/servers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create-server' | '/servers'
-  id: '__root__' | '/' | '/create-server' | '/servers'
+  to: '/' | '/create-server' | '/servers/$serverId' | '/servers'
+  id: '__root__' | '/' | '/create-server' | '/servers/$serverId' | '/servers/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CreateServerRoute: typeof CreateServerRoute
-  ServersRoute: typeof ServersRoute
+  ServersServerIdRoute: typeof ServersServerIdRoute
+  ServersIndexRoute: typeof ServersIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CreateServerRoute: CreateServerRoute,
-  ServersRoute: ServersRoute,
+  ServersServerIdRoute: ServersServerIdRoute,
+  ServersIndexRoute: ServersIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -117,7 +136,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/create-server",
-        "/servers"
+        "/servers/$serverId",
+        "/servers/"
       ]
     },
     "/": {
@@ -126,8 +146,11 @@ export const routeTree = rootRoute
     "/create-server": {
       "filePath": "create-server.tsx"
     },
-    "/servers": {
-      "filePath": "servers.tsx"
+    "/servers/$serverId": {
+      "filePath": "servers/$serverId.tsx"
+    },
+    "/servers/": {
+      "filePath": "servers/index.tsx"
     }
   }
 }

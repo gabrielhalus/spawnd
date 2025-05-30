@@ -16,8 +16,7 @@ async function getServerVersions() {
   if (!res.ok) {
     throw new Error("Server error");
   }
-  const data = await res.json();
-  return data;
+  return await res.json();
 }
 
 function CreateServer() {
@@ -57,7 +56,7 @@ function CreateServer() {
     })) ?? [];
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8">
+    <div className="max-w-4xl mx-auto space-y-8">
       <h1 className="text-2xl font-bold">Create a Server</h1>
       <form
         onSubmit={(e) => {
@@ -96,20 +95,25 @@ function CreateServer() {
                   {
                     label: "Vanilla",
                     value: "vanilla",
-                    description: "Minecraft par défaut",
+                    description: "Default Minecraft Server",
                   },
                   {
                     label: "Paper",
                     value: "paper",
-                    description: "Minecraft avec des plugins",
+                    description: "Minecraft Server with Plugins",
                   },
                   {
                     label: "Fabric",
                     value: "fabric",
-                    description: "Minecraft avec des mods",
+                    description: "Minecraft Server with Mods",
+                  },
+                  {
+                    label: "NeoForge",
+                    value: "neoforge",
+                    description: "Minecraft Server with Mods",
                   },
                 ]}
-                cols={5}
+                cols={4}
               />
               <field.FieldInfo />
             </>
@@ -123,7 +127,7 @@ function CreateServer() {
               <field.SelectField
                 label="Version"
                 options={parsedData}
-                cols={5}
+                cols={4}
               />
               <field.FieldInfo />
             </>

@@ -19,7 +19,6 @@ export const serversTable = sqliteTable("servers", {
 
 export const ServerTypeEnum = z.enum(CONFIG.SERVER_TYPES);
 
-// Schema for inserting a Server - can be used to validate API requests
 export const insertServerSchema = createInsertSchema(serversTable, {
   name: z
     .string()
@@ -34,5 +33,4 @@ export const insertServerSchema = createInsertSchema(serversTable, {
     ),
 });
 
-// Schema for selecting a Server - can be used to validate API requests
 export const selectServerSchema = createSelectSchema(serversTable);
