@@ -3,7 +3,7 @@ import { logger } from "hono/logger";
 import { serveStatic } from "hono/bun";
 
 import serversRoutes from "./routes/servers";
-import serverVersionRoutes from "./routes/server-versions";
+import serverVersionRoutes from "./routes/serverVersions";
 
 const app = new Hono();
 
