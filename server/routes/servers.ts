@@ -1,7 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { createServerSchema } from "../shared/servers";
-import { insertServerSchema, serversTable } from "../db/schemas/servers";
+import { insertServerSchema, serversTable } from "../schemas/servers";
 import { db } from "../db";
 import { desc, eq } from "drizzle-orm";
 

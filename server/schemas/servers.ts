@@ -2,8 +2,8 @@ import { sql } from "drizzle-orm";
 import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
-import { nanoid } from "../../lib/nanoid";
-import { CONFIG } from "../../config";
+import { nanoid } from "../lib/nanoid";
+import { CONFIG } from "../config";
 
 export const serversTable = sqliteTable("servers", {
   id: text("id")

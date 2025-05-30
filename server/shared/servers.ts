@@ -1,5 +1,5 @@
 import type { z } from "zod";
-import { insertServerSchema, ServerTypeEnum } from "../db/schemas/servers";
+import { insertServerSchema, ServerTypeEnum } from "../schemas/servers";
 
 export type ServerType = z.infer<typeof ServerTypeEnum>;
 
