@@ -1,9 +1,14 @@
 import app from "./app";
+import { setServer } from "./lib/publish";
+import { websocket } from "./routes/ws";
+import { startInstallWorker } from "./workers/installWorker";
 
-Bun.serve({
+const server = Bun.serve({
   fetch: app.fetch,
-  hostname: "0.0.0.0",
-  port: 3000,
+  websocket,
 });
+
+setServer(server);
+startInstallWorker();
 
 console.log("🚀 Server running on http://localhost:3000");

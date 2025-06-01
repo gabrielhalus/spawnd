@@ -4,6 +4,7 @@ import { serveStatic } from "hono/bun";
 
 import serversRoutes from "./routes/servers";
 import serverVersionRoutes from "./routes/serverVersions";
+import wsRoutes from "./routes/ws";
 
 const app = new Hono();
 
@@ -13,6 +14,8 @@ const apiRoutes = app
   .basePath("/api")
   .route("/servers", serversRoutes)
   .route("/server-versions", serverVersionRoutes);
+
+app.basePath("/ws").route("/", wsRoutes);
 
 app.use("/*", serveStatic({ root: "./frontend/dist" }));
 app.use("*", serveStatic({ root: "./frontend/dist", path: "index.html" }));

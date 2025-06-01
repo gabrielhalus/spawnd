@@ -7,7 +7,7 @@
     "start": "bun server/index.ts",
     "dev": "bun --watch server/index.ts",
     "worker": "bun server/workers/serverInstall.ts",
-
+    "worker:dev": "bun --watch server/workers/serverInstall.ts",
     "deploy": "bun scripts/deploy.ts",
     "secrets": "bun scripts/secrets.ts",
     "db:migrate": "bun scripts/migrate.ts"
