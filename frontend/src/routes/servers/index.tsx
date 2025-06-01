@@ -1,12 +1,7 @@
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { api } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import ServerCard from "./-components/server-card";
 
 export const Route = createFileRoute("/servers/")({
   component: Servers,
@@ -37,15 +32,7 @@ function Servers() {
       ) : (
         <div className="p-4 space-y-4">
           {data.servers.map((server) => (
-            <Card>
-              <CardHeader>
-                <CardTitle>{server.name}</CardTitle>
-                <CardDescription>
-                  {server.type} - {server.version}
-                </CardDescription>
-                <CardDescription>{server.status}</CardDescription>
-              </CardHeader>
-            </Card>
+            <ServerCard key={server.id} server={server} />
           ))}
         </div>
       )}
