@@ -8,13 +8,6 @@
       "when": 1748507519770,
       "tag": "0000_melodic_ma_gnuci",
       "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1748645502704,
-      "tag": "0001_melodic_plazm",
-      "breakpoints": true
     }
   ]
 }

@@ -17,6 +17,7 @@ const exclude = ["uploads", "logs", ".env", "data"];
 
 const localServerFiles = [
   "server",
+  "scripts/migrate.ts",
   "drizzle",
   "bun.lock",
   "package.json",
@@ -24,6 +25,7 @@ const localServerFiles = [
   "Dockerfile",
   "compose.yml",
 ];
+
 const localClientFiles = ["frontend/dist", "frontend/public"];
 
 function ensureLocalDirsExist() {
@@ -82,9 +84,9 @@ async function pushFiles() {
 
   const push = async (label: string, files: string[], dest: string) => {
     logInfo(`${label} → ${remoteUser}@${remoteHost}:${dest}`);
-    const args = ["-r", ...files, `${remoteUser}@${remoteHost}:${dest}`];
+    const args = ["-avR", ...files, `${remoteUser}@${remoteHost}:${dest}`];
 
-    const proc = Bun.spawn(["scp", ...args], {
+    const proc = Bun.spawn(["rsync", ...args], {
       stdout: "pipe",
       stderr: "pipe",
     });
@@ -97,7 +99,7 @@ async function pushFiles() {
   };
 
   await push("Server files", localServerFiles, remotePath);
-  await push("Frontend files", localClientFiles, `${remotePath}/frontend`);
+  await push("Frontend files", localClientFiles, `${remotePath}`);
 }
 
 async function dockerRestart() {

@@ -1,1 +1,0 @@
-ALTER TABLE `servers` ADD `status` text DEFAULT 'pending' NOT NULL;
