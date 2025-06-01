@@ -8,7 +8,6 @@ export const Route = createFileRoute("/servers/$serverId")({
 });
 
 async function getServer(id: string) {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
   const res = await api.servers[":id"].$get({ param: { id } });
 
   if (!res.ok) {
