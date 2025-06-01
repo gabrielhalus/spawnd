@@ -1,10 +1,11 @@
-import type { Server } from "@server/shared/servers";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import type { Server } from "@server/shared/servers";
+import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 interface ServerCardProps {
@@ -12,22 +13,15 @@ interface ServerCardProps {
 }
 
 function ServerCard({ server }: ServerCardProps) {
+  const navigate = useNavigate();
+
   const [status, setStatus] = useState<string | null>(server.status);
 
   useEffect(() => {
     const ws = new WebSocket(`/ws/server-status?id=${server.id}`);
 
-    ws.onopen = () => {
-      console.log(`Connected to "server-${server.id}" (${server.name})`);
-    };
-
     ws.onmessage = (event) => {
-      console.log("Received message from", server.id, event.data);
       setStatus(event.data);
-    };
-
-    ws.onclose = () => {
-      console.log(`Disconnected from "server-${server.id}" (${server.name})`);
     };
 
     return () => {
@@ -36,7 +30,12 @@ function ServerCard({ server }: ServerCardProps) {
   }, []);
 
   return (
-    <Card>
+    <Card
+      className="cursor-pointer hover:shadow-md"
+      onClick={() =>
+        navigate({ to: "/servers/$serverId", params: { serverId: server.id } })
+      }
+    >
       <CardHeader>
         <CardTitle>{server.name}</CardTitle>
         <CardDescription>
