@@ -16,5 +16,5 @@ export const CONFIG = {
   SERVER_TYPES: ["vanilla", "fabric", "paper", "neoforge"] as const,
 
   // Root directory for servers
-  SERVERS_ROOT: "./debug/minecraft/servers",
+  SERVERS_ROOT: process.env.SERVERS_ROOT,
 };
