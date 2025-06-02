@@ -7,7 +7,7 @@ import { Hono } from "hono";
 
 const app = new Hono()
 
-  .get("/", async c => {
+  .get("/", async (c) => {
     const result = await db
       .select()
       .from(serversTable)
@@ -16,7 +16,7 @@ const app = new Hono()
     return c.json({ servers: result });
   })
 
-  .get("/:id", async c => {
+  .get("/:id", async (c) => {
     const id = c.req.param("id");
 
     const server = db
@@ -26,13 +26,13 @@ const app = new Hono()
       .get();
 
     if (server == undefined) {
-      return c.json({ error: "Not Found" }, 404);
+      return c.notFound();
     }
 
     return c.json({ server });
   })
 
-  .post("/", zValidator("json", createServerSchema), async c => {
+  .post("/", zValidator("json", createServerSchema), async (c) => {
     const server = insertServerSchema.parse(c.req.valid("json"));
 
     const [createdServer] = await db
@@ -44,14 +44,14 @@ const app = new Hono()
     return c.json({ server: createdServer });
   })
 
-  .delete("/:id", async c => {
+  .delete("/:id", async (c) => {
     const id = c.req.param("id");
 
     const deletedServer = await db
       .delete(serversTable)
       .where(eq(serversTable.id, id))
       .returning()
-      .then(res => res[0]);
+      .then((res) => res[0]);
 
     if (!deletedServer) {
       return c.json({ error: "Not Found" }, 404);
