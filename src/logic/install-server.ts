@@ -1,7 +1,7 @@
 import { write } from "bun";
 import { db } from "../lib/db";
 import { CONFIG } from "../config";
-import { fetchJson } from "../lib/fetchJson";
+import { fetchJson } from "../lib/fetch-json";
 import { publishServerStatus } from "../lib/publish";
 import { serversTable } from "../schemas/servers";
 import { eq } from "drizzle-orm";

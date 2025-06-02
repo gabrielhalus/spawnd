@@ -1,7 +1,7 @@
 import { db } from "../lib/db";
 import { eq } from "drizzle-orm";
 import { serversTable } from "../schemas/servers";
-import { installServer } from "../logic/installServer";
+import { installServer } from "../logic/install-server";
 
 export function startInstallWorker(interval = 5000) {
   setInterval(async () => {
