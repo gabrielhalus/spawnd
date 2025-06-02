@@ -16,7 +16,7 @@ const subcommand = args[0];
 const exclude = ["uploads", "logs", ".env", "data"];
 
 const localServerFiles = [
-  "server",
+  "src",
   "scripts/migrate.ts",
   "drizzle",
   "bun.lock",
