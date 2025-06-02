@@ -20,6 +20,7 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@hono/zod-openapi": "^0.19.8",
     "@hono/zod-validator": "^0.5.0",
     "@libsql/client": "^0.15.7",
     "drizzle-orm": "^0.43.1",
