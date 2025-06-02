@@ -1,9 +1,9 @@
-import type { z } from "zod";
 import {
   insertServerSchema,
   serversTable,
   ServerTypeEnum,
-} from "../schemas/servers";
+} from "@/schemas/servers";
+import type { z } from "zod";
 
 export type Server = typeof serversTable.$inferSelect;
 

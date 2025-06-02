@@ -3,7 +3,10 @@ const remoteHostEnv = process.env.REMOTE_HOST;
 const remotePathEnv = process.env.REMOTE_PATH;
 
 if (!remoteUserEnv || !remoteHostEnv || !remotePathEnv) {
-  console.error("\x1b[31m%s\x1b[0m", "ERROR: Missing REMOTE_USER, REMOTE_HOST, or REMOTE_PATH environment variables.");
+  console.error(
+    "\x1b[31m%s\x1b[0m",
+    "ERROR: Missing REMOTE_USER, REMOTE_HOST, or REMOTE_PATH environment variables.",
+  );
   process.exit(1);
 }
 

@@ -1,5 +1,4 @@
-import type { ServerWebSocket } from "bun";
-import { topicPrefix } from "../routes/ws";
+import { topicPrefix } from "@/routes/ws";
 
 let server: Bun.Server | null = null;
 

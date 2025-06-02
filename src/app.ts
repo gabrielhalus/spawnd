@@ -1,9 +1,9 @@
-import { Hono } from "hono/tiny";
-import { logger } from "hono/logger";
 import { serveStatic } from "hono/bun";
+import { logger } from "hono/logger";
+import { Hono } from "hono/tiny";
 
-import serversRoutes from "./routes/servers";
 import serverVersionRoutes from "./routes/server-versions";
+import serversRoutes from "./routes/servers";
 import wsRoutes from "./routes/ws";
 
 const app = new Hono();

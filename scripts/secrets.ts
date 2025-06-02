@@ -1,12 +1,11 @@
-import readline from "readline";
 import {
-  remoteUser,
-  remoteHost,
-  remotePath,
-  logSection,
   logError,
   logInfo,
+  logSection,
   logSuccess,
+  remoteHost,
+  remotePath,
+  remoteUser,
 } from "./utils";
 
 const args = Bun.argv.slice(2); // skip "bun", "run", "scripts/secrets.ts"
@@ -29,7 +28,7 @@ if (!subcommand || !argument) {
 
 // Hidden prompt for sensitive values
 function promptHidden(query: string): Promise<string> {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     process.stdout.write(query);
 
     let input = "";

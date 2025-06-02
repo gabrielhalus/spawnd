@@ -1,14 +1,14 @@
 // scripts/deploy.ts
+import { existsSync, mkdirSync } from "fs";
 import {
-  remoteUser,
+  logError,
+  logInfo,
+  logSection,
+  logSuccess,
   remoteHost,
   remotePath,
-  logSection,
-  logInfo,
-  logSuccess,
-  logError,
+  remoteUser,
 } from "./utils";
-import { mkdirSync, existsSync } from "fs";
 
 const args = Bun.argv.slice(2); // skip "bun", "run", "scripts/deploy.ts"
 const subcommand = args[0];
@@ -43,7 +43,7 @@ async function ensureRemoteDirsExist() {
   logSection("Ensuring remote path exist");
 
   const dirs = [`${remotePath}`];
-  const mkdirCmd = dirs.map((dir) => `mkdir -p '${dir}'`).join(" && ");
+  const mkdirCmd = dirs.map(dir => `mkdir -p '${dir}'`).join(" && ");
 
   const proc = Bun.spawn(["ssh", `${remoteUser}@${remoteHost}`, mkdirCmd], {
     stdout: "pipe",
@@ -64,7 +64,7 @@ async function cleanRemote() {
   logInfo(`Target: ${remotePath}`);
   logInfo(`Exclusions: ${exclude.join(", ")}`);
 
-  const excludeArgs = exclude.map((name) => `! -name '${name}'`).join(" ");
+  const excludeArgs = exclude.map(name => `! -name '${name}'`).join(" ");
   const cleanCmd = `cd ${remotePath} && find . -mindepth 1 -maxdepth 1 ${excludeArgs} -exec rm -rf {} +`;
 
   const proc = Bun.spawn(["ssh", `${remoteUser}@${remoteHost}`, cleanCmd], {

@@ -1,11 +1,11 @@
 import { write } from "bun";
-import { db } from "../lib/db";
-import { CONFIG } from "../config";
-import { fetchJson } from "../lib/fetch-json";
-import { publishServerStatus } from "../lib/publish";
-import { serversTable } from "../schemas/servers";
+import { db } from "@/lib/db";
+import { CONFIG } from "@/config";
+import { fetchJson } from "@/lib/fetch-json";
+import { publishServerStatus } from "@/lib/publish";
+import { serversTable } from "@/schemas/servers";
 import { eq } from "drizzle-orm";
-import type { Server } from "../shared/servers";
+import type { Server } from "@/shared/servers";
 
 export async function installServer(server: Server) {
   const serverDir = `${CONFIG.SERVERS_ROOT}/${server.id}`;
