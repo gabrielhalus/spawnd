@@ -14,7 +14,7 @@ if (!fs.existsSync(dbPath)) {
 const db = new Database(dbPath!);
 
 const migrationFolder = "./drizzle";
-const files = fs.readdirSync(migrationFolder).filter(f => f.endsWith(".sql"));
+const files = fs.readdirSync(migrationFolder).filter((f) => f.endsWith(".sql"));
 
 for (const file of files.sort()) {
   const sql = fs.readFileSync(join(migrationFolder, file), "utf8");

@@ -1,3 +1,5 @@
+import env from "@/env";
+
 import type { ErrorHandler } from "hono";
 import type { StatusCode } from "hono/utils/http-status";
 
