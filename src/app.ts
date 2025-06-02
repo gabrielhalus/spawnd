@@ -1,7 +1,9 @@
 import { serveStatic } from "hono/bun";
-import { logger } from "hono/logger";
-import { Hono } from "hono/tiny";
 
+import { OpenAPIHono } from "@hono/zod-openapi";
+import type { PinoLogger } from "hono-pino";
+
+import logger from "./middlewares/logger";
 import notFound from "./middlewares/not-found";
 import onError from "./middlewares/on-error";
 
@@ -9,7 +11,13 @@ import serverVersionRoutes from "./routes/server-versions";
 import serversRoutes from "./routes/servers";
 import wsRoutes from "./routes/ws";
 
-const app = new Hono();
+type AppBindings = {
+  Variables: {
+    logger: PinoLogger;
+  };
+};
+
+const app = new OpenAPIHono<AppBindings>();
 
 app.use("*", logger());
 app.notFound(notFound);
