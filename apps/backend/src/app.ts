@@ -1,0 +1,25 @@
+import { serveStatic } from "hono/bun";
+
+import { Hono } from "hono";
+import { logger } from "hono/logger";
+
+import serverVersionRoutes from "@routes/server-versions";
+import serversRoutes from "@routes/servers";
+import wsRoutes from "@routes/ws";
+
+const app = new Hono();
+
+app.use("*", logger());
+
+const apiRoutes = app
+  .basePath("/api")
+  .route("/servers", serversRoutes)
+  .route("/server-versions", serverVersionRoutes);
+
+app.basePath("/ws").route("/", wsRoutes);
+
+app.use("/*", serveStatic({ root: "./frontend/dist" }));
+app.use("*", serveStatic({ root: "./frontend/dist", path: "index.html" }));
+
+export default app;
+export type ApiRoutes = typeof apiRoutes;

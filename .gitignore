@@ -1,40 +1,39 @@
-# dependencies (bun install)
-node_modules
+# OS and editor junk
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.log
 
-# output
-out
-dist
-*.tgz
+# Node/Bun deps
+node_modules/
+bun.lockb
+.pnpm-store/
 
-# code coverage
-coverage
-*.lcov
+# Bun specific
+.bun/
 
-# logs
-logs
-_.log
-report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
-
-# dotenv environment variable files
+# Env / secrets
 .env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+.env.*
 
-# caches
-.eslintcache
-.cache
+# SQLite / debug
+*.sqlite
+*.db
+debug/
+
+# Build outputs (if any are accidentally introduced)
+dist/
+build/
 *.tsbuildinfo
 
-# IntelliJ based IDEs
-.idea
+# VSCode
+.vscode/
 
-# Finder (MacOS) folder config
-.DS_Store
+# Logs / tmp
+*.log
+*.tmp
+*.bak
 
-# SQLite
-*.db
-
-# Debug
-debug
+# Writable directories
+apps/backend/data/

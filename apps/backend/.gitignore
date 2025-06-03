@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+*.json
+
+# Environment variables
+.env*
+!.env.example
+
+# Cache and build metadata
+.cache/
+.eslintcache
+*.tsbuildinfo
