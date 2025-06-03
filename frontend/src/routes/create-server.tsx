@@ -1,6 +1,6 @@
 import type { SelectOption } from "@/components/ui/select-field";
 import { useAppForm } from "@/hooks/form";
-import { api } from "@/lib/api";
+import { api } from "@/lib/hono";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
@@ -64,8 +64,7 @@ function CreateServer() {
           e.preventDefault();
           form.handleSubmit();
         }}
-        className="space-y-4"
-      >
+        className="space-y-4">
         <form.AppField
           name="name"
           children={(field) => {

@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { api } from "@/lib/api";
+import { api } from "@/lib/hono";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
