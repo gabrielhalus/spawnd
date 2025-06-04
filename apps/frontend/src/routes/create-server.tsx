@@ -49,7 +49,7 @@ function CreateServer() {
   });
 
   const parsedData: SelectOption[] =
-    data?.mojang.map((v) => ({
+    data?.vanilla.map((v) => ({
       label: v.id,
       value: v.id,
       description: "Minecraft " + v.id,

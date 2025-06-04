@@ -12,7 +12,6 @@ let cache: { data: ServerVersionResult; expiresAt: number } | null = null;
 const app = new Hono().get("/", async (c) => {
   const now = Date.now();
   if (cache && cache.expiresAt > now) {
-    console.log("Use cache");
     return c.json(cache.data);
   }
 
