@@ -1,4 +1,4 @@
-import db from "@lib/db";
+import { db } from "@lib/db";
 import env from "@lib/env";
 import { fetchJson } from "@lib/fetch-json";
 import { publishServerStatus } from "@lib/publish";

@@ -1,4 +1,4 @@
-import db from "@lib/db";
+import { db } from "@lib/db";
 import { installServer } from "@services/install-server";
 import { serversTable } from "@shared/schemas/servers";
 import { eq } from "drizzle-orm";

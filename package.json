@@ -5,5 +5,17 @@
   "workspaces": [
     "packages/*",
     "apps/*"
-  ]
+  ],
+  "scripts": {
+    "start:backend": "bun --cwd=apps/backend run start",
+    "dev:backend": "bun --cwd=apps/backend run dev",
+    "start:frontend": "bun --cwd=apps/frontend run dev",
+    "dev:frontend": "bun --cwd=apps/frontend run dev",
+    "build:frontend": "bun --cwd=apps/frontend run build"
+  },
+  "dependencies": {
+    "hono": "^4.7.10",
+    "drizzle-orm": "^0.44.1",
+    "zod": "^3.25.49"
+  }
 }

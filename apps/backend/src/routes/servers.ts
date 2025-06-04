@@ -1,5 +1,5 @@
 import { zValidator } from "@hono/zod-validator";
-import db from "@lib/db";
+import { db } from "@lib/db";
 import {
   createServerSchema,
   insertServerSchema,
