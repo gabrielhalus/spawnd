@@ -11,7 +11,9 @@
     "dev:backend": "bun --cwd=apps/backend run dev",
     "start:frontend": "bun --cwd=apps/frontend run dev",
     "dev:frontend": "bun --cwd=apps/frontend run dev",
-    "build:frontend": "bun --cwd=apps/frontend run build"
+    "build:frontend": "bun --cwd=apps/frontend run build",
+    "db:generate": "bunx --bun drizzle-kit generate --config apps/backend/drizzle.config.ts",
+    "db:migrate": "bun run --cwd=apps/backend scripts/migrate.ts"
   },
   "dependencies": {
     "hono": "^4.7.10",

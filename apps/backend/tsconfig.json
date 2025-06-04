@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "types": ["bun-types"],
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["../../packages/shared/*"],
+      "@lib/*": ["src/lib/*"],
+      "@routes/*": ["src/routes/*"],
+      "@services/*": ["src/services/*"],
+      "@workers/*": ["src/workers/*"]
+    }
+  },
+  "include": ["src", "scripts", "drizzle.config.ts"]
+}

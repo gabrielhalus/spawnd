@@ -14,7 +14,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "@server": path.resolve(__dirname, "../server"),
+      "@shared": path.resolve(__dirname, "../../packages/shared"),
     },
   },
   server: {
@@ -29,4 +29,5 @@ export default defineConfig({
       },
     },
   },
+  cacheDir: "../../node_modules/.vite",
 });
