@@ -1,15 +1,15 @@
 {
   "name": "@spawnd/api-client",
-  "private": true,
   "version": "0.0.1",
+  "private": true,
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch"
   },
   "dependencies": {
+    "@spawnd/api": "workspace:*",
     "@spawnd/eslint-config": "workspace:*",
     "@spawnd/typescript-config": "workspace:*",
-    "@spawnd/api": "workspace:*",
     "hono": "^4.7.1"
   },
   "devDependencies": {
