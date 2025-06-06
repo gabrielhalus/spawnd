@@ -8,15 +8,23 @@
   "scripts": {
     "dev": "bun run --watch src/index.ts",
     "lint": "eslint .",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
+    "@hono/zod-validator": "^0.7.0",
+    "@libsql/client": "^0.15.8",
     "@spawnd/eslint-config": "workspace:*",
+    "@spawnd/shared": "workspace:*",
     "@spawnd/typescript-config": "workspace:*",
-    "hono": "^4.7.11"
+    "hono": "^4.7.11",
+    "zod": "^3.25.55"
   },
   "devDependencies": {
     "@types/bun": "^1.2.15",
+    "drizzle-kit": "^0.31.1",
     "eslint": "^9.28.0",
     "eslint-plugin-drizzle": "^0.2.3"
   }

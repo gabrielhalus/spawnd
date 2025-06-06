@@ -27,6 +27,9 @@ out/
 build
 dist
 
+# Database
+*.db
+*.db-journal
 
 # Debug
 npm-debug.log*

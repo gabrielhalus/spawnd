@@ -3,7 +3,9 @@ import { logger } from "hono/logger";
 
 import servers from "./routes/servers";
 
-const app = new Hono().basePath("/api").route("/servers", servers);
+const app = new Hono({ strict: false })
+  .basePath("/api")
+  .route("/servers", servers);
 
 app.use("*", logger());
 
