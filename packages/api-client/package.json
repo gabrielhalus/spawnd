@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch"
+    "dev": "tsc --watch",
+    "build": "rm -rf dist && tsc",
+    "lint": "eslint .",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@spawnd/api": "workspace:*",

@@ -3,8 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "rm -rf dist && tsc",
+    "lint": "eslint .",
+    "check-types": "tsc --noEmit"
+  },
   "exports": {
-    "schemas/*": "./schemas/*.ts"
+    "schemas/*": "./src/schemas/*.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.2",
