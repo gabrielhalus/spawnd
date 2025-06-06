@@ -7,6 +7,9 @@
     "lint": "eslint .",
     "check-types": "tsc --noEmit"
   },
+  "exports": {
+    ".": "./src/app.ts"
+  },
   "dependencies": {
     "@spawnd/eslint-config": "workspace:*",
     "@spawnd/typescript-config": "workspace:*",

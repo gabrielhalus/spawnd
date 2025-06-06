@@ -21,6 +21,16 @@
         "eslint-plugin-drizzle": "^0.2.3",
       },
     },
+    "packages/api-client": {
+      "name": "@spawnd/api-client",
+      "version": "0.0.1",
+      "dependencies": {
+        "@spawnd/api": "workspace:*",
+        "@spawnd/eslint-config": "workspace:*",
+        "@spawnd/typescript-config": "workspace:*",
+        "hono": "^4.7.1",
+      },
+    },
     "packages/eslint-config": {
       "name": "@spawnd/eslint-config",
       "version": "0.0.1",
@@ -113,6 +123,8 @@
     "@pkgr/core": ["@pkgr/core@0.1.2", "", {}, "sha512-fdDH1LSGfZdTH2sxdpVMw31BanV28K/Gry0cVFxaNP77neJSkd82mM8ErPNYs9e+0O7SdHBLTDzDgwUuy18RnQ=="],
 
     "@spawnd/api": ["@spawnd/api@workspace:apps/api"],
+
+    "@spawnd/api-client": ["@spawnd/api-client@workspace:packages/api-client"],
 
     "@spawnd/eslint-config": ["@spawnd/eslint-config@workspace:packages/eslint-config"],
 
