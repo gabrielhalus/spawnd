@@ -1,0 +1,17 @@
+{
+  "name": "@spawnd/eslint-config",
+  "version": "0.0.1",
+  "private": true,
+  "main": "index.js",
+  "exports": {
+    ".": "./eslint.config.js",
+    "./create-config": "./create-config.js"
+  },
+  "dependencies": {
+    "eslint": "^9.28.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^4.13.3",
+    "eslint-plugin-format": "^1.0.1"
+  }
+}
