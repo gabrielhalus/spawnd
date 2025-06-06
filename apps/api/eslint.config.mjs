@@ -1,4 +1,4 @@
-import createConfig from "@tasks-app/eslint-config/create-config";
+import createConfig from "@spawnd/eslint-config/create-config";
 import drizzle from "eslint-plugin-drizzle";
 
 export default createConfig({

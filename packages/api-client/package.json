@@ -11,5 +11,8 @@
     "@spawnd/typescript-config": "workspace:*",
     "@spawnd/api": "workspace:*",
     "hono": "^4.7.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.28.0"
   }
 }

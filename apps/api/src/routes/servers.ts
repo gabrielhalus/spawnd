@@ -19,10 +19,10 @@ const fakeServers = [
 ];
 
 export default new Hono()
-  .get("/", (c) => c.json({ servers: fakeServers }))
+  .get("/", c => c.json({ servers: fakeServers }))
   .get("/:id", (c) => {
     const server = fakeServers.find(
-      (server) => server.id === c.req.param("id"),
+      server => server.id === c.req.param("id"),
     );
 
     if (!server) {
