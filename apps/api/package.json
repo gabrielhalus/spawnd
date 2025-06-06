@@ -1,0 +1,19 @@
+{
+  "name": "@spawnd/api",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "lint": "eslint .",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@spawnd/eslint-config": "workspace:*",
+    "@spawnd/typescript-config": "workspace:*",
+    "hono": "^4.7.11"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.15",
+    "eslint-plugin-drizzle": "^0.2.3"
+  }
+}
