@@ -6,6 +6,7 @@
     ".": "./src/app.ts"
   },
   "scripts": {
+    "start": "bun run src/index.ts",
     "dev": "bun run --watch src/index.ts",
     "lint": "eslint .",
     "check-types": "tsc --noEmit",
