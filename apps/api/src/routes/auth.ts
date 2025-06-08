@@ -2,9 +2,9 @@ import { zValidator } from "@hono/zod-validator";
 import { createUserSchema } from "@spawnd/shared/schemas/users";
 import { password } from "bun";
 import { Hono } from "hono";
-import { sign } from "hono/jwt";
+import { sign, verify } from "hono/jwt";
 
-import { getUserByEmail, insertUser } from "@/db/queries/users";
+import { getUserByEmail, getUserById, insertUser } from "@/db/queries/users";
 import env from "@/lib/env";
 
 export default new Hono()
@@ -68,11 +68,41 @@ export default new Hono()
         return c.json({ success: false, error: "Invalid credentials" }, 401);
       }
 
-      const token = await sign({ id: user.id }, env.JWT_SECRET);
+      const token = await sign({ 
+        sub: user.id,
+        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30, // 30 days
+       }, env.JWT_SECRET);
 
       return c.json({ success: true, user: { ...user, password: undefined }, token });
     }
     catch (error: any) {
       return c.json({ success: false, error: error.message }, 500);
     }
-  });
+  })
+
+  /**
+   * Get the current user
+   * @param c - The context
+   * @returns The current user
+   */
+  .get("/me", async (c) => {
+    const token = c.req.header("Authorization")?.split(" ")[1];
+
+    if (!token) {
+      return c.json({ success: false, error: "Unauthorized" }, 401);
+    }
+
+    const decoded = await verify(token, env.JWT_SECRET);
+
+    if (!decoded) {
+      return c.json({ success: false, error: "Unauthorized" }, 401);
+    }
+
+    const user = await getUserById(decoded.id as string);
+
+    if (!user) {
+      return c.json({ success: false, error: "Unauthorized" }, 401);
+    }
+
+    return c.json({ success: true, user: { ...user, password: undefined } });
+  })
