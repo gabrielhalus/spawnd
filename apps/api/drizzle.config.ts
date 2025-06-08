@@ -1,7 +1,7 @@
 import { defineConfig } from "drizzle-kit";
 import { join } from "node:path";
 
-import env from "@/api/lib/env";
+import env from "@/lib/env";
 
 export default defineConfig({
   schema: join(__dirname, "../../packages/shared/src/schemas/*.ts"),
