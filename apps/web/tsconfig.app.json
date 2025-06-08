@@ -9,6 +9,7 @@
       "@/*": ["./src/*"]
     },
     "allowImportingTsExtensions": true,
+    "skipLibCheck": true,
     "noEmit": true
   },
   "include": ["src"]
