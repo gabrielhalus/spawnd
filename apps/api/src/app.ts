@@ -1,13 +1,14 @@
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 
-import servers from "./routes/servers";
+import auth from "./routes/auth";
+import users from "./routes/users";
 
 const app = new Hono({ strict: false })
+  .use("*", logger())
   .basePath("/api")
-  .route("/servers", servers);
-
-app.use("*", logger());
+  .route("/auth", auth)
+  .route("/users", users);
 
 export default app;
 export type AppType = typeof app;

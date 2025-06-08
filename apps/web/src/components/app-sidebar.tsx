@@ -1,10 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { Box, Calendar, DatabaseBackup, Home, Server, Settings2, Users, Users2 } from "lucide-react";
+import { Box, Calendar, DatabaseBackup, Home, Server, Settings2, Users } from "lucide-react";
 import React from "react";
 
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
-import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarRail } from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 
 const data = {
   teams: {

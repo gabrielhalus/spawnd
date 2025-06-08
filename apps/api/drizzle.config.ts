@@ -5,9 +5,9 @@ import env from "@/lib/env";
 
 export default defineConfig({
   schema: join(__dirname, "../../packages/shared/src/schemas/*.ts"),
-  out: "./src/drizzle/migrations",
+  out: "./src/db/migrations",
   dialect: "sqlite",
   dbCredentials: {
-    url: env.DATABASE_PATH,
+    url: env.DATABASE_URL,
   },
 });

@@ -5,7 +5,8 @@
     "jsxImportSource": "hono/jsx",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@spawnd/shared/schemas/*": ["../../packages/shared/src/schemas/*"]
     }
   }
 }
