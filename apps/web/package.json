@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "@spawnd/web",
   "type": "module",
   "version": "0.0.0",
   "private": true,
@@ -14,6 +14,8 @@
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.2.7",
+    "@spawnd/api-client": "workspace:*",
+    "@spawnd/shared": "workspace:*",
     "@tailwindcss/vite": "^4.1.8",
     "@tanstack/react-query": "^5.80.6",
     "@tanstack/react-router": "^1.120.18",
@@ -29,9 +31,7 @@
   "devDependencies": {
     "@eslint-react/eslint-plugin": "^1.51.2",
     "@eslint/js": "^9.25.0",
-    "@spawnd/api-client": "workspace:*",
     "@spawnd/eslint-config": "workspace:*",
-    "@spawnd/shared": "workspace:*",
     "@spawnd/typescript-config": "workspace:*",
     "@tanstack/eslint-plugin-query": "^5.78.0",
     "@tanstack/router-plugin": "^1.120.18",
