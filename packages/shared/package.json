@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "schemas/*": "./src/schemas/*.ts"
+    "schemas/*": "./dist/schemas/*.js"
   },
   "scripts": {
     "dev": "tsc --watch",
-    "build": "rm -rf dist && tsc",
+    "build": "tsc",
     "lint": "eslint .",
     "check-types": "tsc --noEmit"
   },
