@@ -16,6 +16,9 @@ export const users = sqliteTable("users", {
   updatedAt: integer("updated_at").notNull().$defaultFn(() => new Date().getTime()),
 });
 
+export type User = typeof users.$inferSelect;
+export type UserProfile = Omit<User, "password">;
+
 export const selectUserSchema = createSelectSchema(users);
 
 export const insertUserSchema = createInsertSchema(users, {

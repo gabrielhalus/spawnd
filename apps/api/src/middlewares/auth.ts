@@ -1,0 +1,45 @@
+import type { UserProfile } from "@spawnd/shared/schemas/users"
+import { createFactory } from "hono/factory"
+import { verify } from "hono/jwt"
+
+import env from "@/lib/env"
+import { getUserById } from "@/db/queries/users"
+
+type Env = {
+  Variables: {
+    user: UserProfile
+  }
+}
+
+const factory = createFactory<Env>();
+
+/**
+ * Get the user from the JWT token
+ * @param c - The context
+ * @param next - The next middleware
+ * @returns The user
+ */
+export const getUser = factory.createMiddleware(async (c, next) => {
+  const token = c.req.header("Authorization")?.split(" ")[1];
+
+  if (!token) {
+    return c.json({ success: false, error: "Unauthorized" }, 401);
+  }
+
+  const decoded = await verify(token, env.JWT_SECRET);
+
+  if (!decoded) {
+    return c.json({ success: false, error: "Unauthorized" }, 401);
+  }
+
+  const user = await getUserById(decoded.id as string);
+
+  if (!user) {
+    return c.json({ success: false, error: "Unauthorized" }, 401);
+  }
+
+  const { password: _, ...userProfile } = user;
+  c.set("user", userProfile);
+
+  await next();
+})

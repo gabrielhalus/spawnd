@@ -2,10 +2,11 @@ import { zValidator } from "@hono/zod-validator";
 import { createUserSchema } from "@spawnd/shared/schemas/users";
 import { password } from "bun";
 import { Hono } from "hono";
-import { sign, verify } from "hono/jwt";
+import { sign } from "hono/jwt";
 
-import { getUserByEmail, getUserById, insertUser } from "@/db/queries/users";
+import { getUserByEmail, insertUser } from "@/db/queries/users";
 import env from "@/lib/env";
+import { getUser } from "@/middlewares/auth";
 
 export default new Hono()
   /**
@@ -85,24 +86,7 @@ export default new Hono()
    * @param c - The context
    * @returns The current user
    */
-  .get("/me", async (c) => {
-    const token = c.req.header("Authorization")?.split(" ")[1];
-
-    if (!token) {
-      return c.json({ success: false, error: "Unauthorized" }, 401);
-    }
-
-    const decoded = await verify(token, env.JWT_SECRET);
-
-    if (!decoded) {
-      return c.json({ success: false, error: "Unauthorized" }, 401);
-    }
-
-    const user = await getUserById(decoded.id as string);
-
-    if (!user) {
-      return c.json({ success: false, error: "Unauthorized" }, 401);
-    }
-
-    return c.json({ success: true, user: { ...user, password: undefined } });
+  .get("/me", getUser, async (c) => {
+    const user = c.var.user;
+    return c.json({ success: true, user });
   })

@@ -1,8 +1,11 @@
 import { Hono } from "hono";
 
 import { getAllUsers, getUserById } from "@/db/queries/users";
+import { getUser } from "@/middlewares/auth";
 
 export default new Hono()
+  .use(getUser)
+
   /**
    * Get all users
    * @param c - The context
