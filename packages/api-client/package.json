@@ -2,6 +2,9 @@
   "name": "@spawnd/api-client",
   "version": "0.0.1",
   "private": true,
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "scripts": {
     "dev": "tsc --watch",
     "build": "rm -rf dist && tsc",
