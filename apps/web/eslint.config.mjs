@@ -3,6 +3,7 @@ import pluginQuery from "@tanstack/eslint-plugin-query";
 
 export default createConfig({
   react: true,
+  ignores: ["src/routeTree.gen.ts"],
 }, {
   plugins: {
     "@tanstack/query": pluginQuery,
