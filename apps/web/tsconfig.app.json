@@ -6,11 +6,12 @@
     "target": "ES2022",
     "jsx": "react-jsx",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "baseUrl": "src",
     "module": "Preserve",
     "moduleResolution": "Bundler",
-    "baseUrl": "src",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@spawnd/shared/schemas/*": ["../../../packages/shared/src/schemas/*"]
     },
     "allowImportingTsExtensions": true,
     "noEmit": true,
