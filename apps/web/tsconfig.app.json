@@ -11,7 +11,7 @@
     "moduleResolution": "Bundler",
     "paths": {
       "@/*": ["./*"],
-      "@spawnd/shared/schemas/*": ["../../../packages/shared/src/schemas/*"]
+      "@spawnd/shared/*": ["../../../packages/shared/src/*"]
     },
     "allowImportingTsExtensions": true,
     "noEmit": true,
