@@ -33,7 +33,7 @@ export const getUser = factory.createMiddleware(async (c, next) => {
     return c.json({ success: false, error: "Unauthorized" }, 401);
   }
 
-  const user = await getUserById(decoded.id as string);
+  const user = await getUserById(decoded.sub as string);
 
   if (!user) {
     return c.json({ success: false, error: "Unauthorized" }, 401);

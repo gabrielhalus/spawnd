@@ -74,7 +74,7 @@ export default new Hono()
         exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30, // 30 days
       }, env.JWT_SECRET);
 
-      return c.json({ success: true, user: { ...user, password: undefined }, token });
+      return c.json({ success: true, token });
     }
     catch (error: any) {
       return c.json({ success: false, error: error.message }, 500);
