@@ -69,10 +69,10 @@ export default new Hono()
         return c.json({ success: false, error: "Invalid credentials" }, 401);
       }
 
-      const token = await sign({ 
+      const token = await sign({
         sub: user.id,
         exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30, // 30 days
-       }, env.JWT_SECRET);
+      }, env.JWT_SECRET);
 
       return c.json({ success: true, user: { ...user, password: undefined }, token });
     }
@@ -89,4 +89,4 @@ export default new Hono()
   .get("/me", getUser, async (c) => {
     const user = c.var.user;
     return c.json({ success: true, user });
-  })
+  });

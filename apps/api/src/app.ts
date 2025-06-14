@@ -1,7 +1,6 @@
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 
-
 import auth from "@/routes/auth";
 import users from "@/routes/users";
 

@@ -1,15 +1,16 @@
-import type { UserProfile } from "@spawnd/shared/schemas/users"
-import { createFactory } from "hono/factory"
-import { verify } from "hono/jwt"
+import type { UserProfile } from "@spawnd/shared/schemas/users";
 
-import env from "@/lib/env"
-import { getUserById } from "@/db/queries/users"
+import { createFactory } from "hono/factory";
+import { verify } from "hono/jwt";
+
+import { getUserById } from "@/db/queries/users";
+import env from "@/lib/env";
 
 type Env = {
   Variables: {
-    user: UserProfile
-  }
-}
+    user: UserProfile;
+  };
+};
 
 const factory = createFactory<Env>();
 
@@ -42,4 +43,4 @@ export const getUser = factory.createMiddleware(async (c, next) => {
   c.set("user", userProfile);
 
   await next();
-})
+});
