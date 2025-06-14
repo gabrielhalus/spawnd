@@ -1,5 +1,4 @@
 import { zValidator } from "@hono/zod-validator";
-import { createUserSchema } from "@spawnd/shared/schemas/users";
 import { password } from "bun";
 import { Hono } from "hono";
 import { sign } from "hono/jwt";
@@ -7,6 +6,7 @@ import { sign } from "hono/jwt";
 import { getUserByEmail, insertUser } from "@/db/queries/users";
 import env from "@/lib/env";
 import { getUser } from "@/middlewares/auth";
+import { createUserSchema } from "@spawnd/shared/schemas/users";
 
 export default new Hono()
   /**
@@ -60,13 +60,13 @@ export default new Hono()
       const user = await getUserByEmail(credentials.email);
 
       if (!user) {
-        return c.json({ success: false, error: "Invalid credentials" }, 401);
+        return c.json({ error: "Invalid credentials" }, 401);
       }
 
       const isPasswordValid = await password.verify(credentials.password, user.password);
 
       if (!isPasswordValid) {
-        return c.json({ success: false, error: "Invalid credentials" }, 401);
+        return c.json({ error: "Invalid credentials" }, 401);
       }
 
       const token = await sign({
@@ -74,10 +74,10 @@ export default new Hono()
         exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30, // 30 days
       }, env.JWT_SECRET);
 
-      return c.json({ success: true, token });
+      return c.json({ token });
     }
     catch (error: any) {
-      return c.json({ success: false, error: error.message }, 500);
+      return c.json({ error: error.message }, 500);
     }
   })
 
@@ -88,5 +88,5 @@ export default new Hono()
    */
   .get("/me", getUser, async (c) => {
     const user = c.var.user;
-    return c.json({ success: true, user });
+    return c.json({ user });
   });

@@ -8,5 +8,5 @@
       "@/*": ["./*"],
       "@spawnd/shared/schemas/*": ["../../../packages/shared/src/schemas/*"]
     }
-  },
+  }
 }
