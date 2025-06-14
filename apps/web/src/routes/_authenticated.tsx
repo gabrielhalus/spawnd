@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 import { userQueryOptions } from "@/lib/api";
 
@@ -7,26 +7,15 @@ export const Route = createFileRoute("/_authenticated")({
     const queryClient = context.queryClient;
 
     try {
-      const data = await queryClient.fetchQuery(userQueryOptions);
-      return data;
+      return await queryClient.fetchQuery(userQueryOptions);
     }
     catch {
-      return { user: null };
+      throw redirect({ to: "/login" });
     }
   },
-  component: Component,
+  component: AuthenticatedLayout,
 });
 
-function Component() {
-  const { user } = Route.useRouteContext();
-
-  if (!user) {
-    return <Login />;
-  }
-
+function AuthenticatedLayout() {
   return <Outlet />;
-}
-
-function Login() {
-  return "You have to login";
 }
