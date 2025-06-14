@@ -1,6 +1,8 @@
-import { deleteAllTokens, getAllTokens } from "@/db/queries/tokens";
 import { Hono } from "hono";
 
+import { deleteAllTokens, getAllTokens } from "@/db/queries/tokens";
+
+// eslint-disable-next-line drizzle/enforce-delete-with-where
 export default new Hono()
 
   /**
@@ -11,7 +13,7 @@ export default new Hono()
   .get("/", async (c) => {
     try {
       const tokens = await getAllTokens();
-      return c.json({ success: true, tokens })
+      return c.json({ success: true, tokens });
     }
     catch (error: any) {
       return c.json({ success: false, error: error.message }, 500);
@@ -27,7 +29,8 @@ export default new Hono()
     try {
       await deleteAllTokens();
       return c.json({ success: true });
-    } catch (error: any) {
+    }
+    catch (error: any) {
       return c.json({ success: false, error: error.message }, 500);
     }
-  })
+  });

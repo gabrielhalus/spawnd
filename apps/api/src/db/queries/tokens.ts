@@ -7,7 +7,7 @@ import { tokens } from "@spawnd/shared/schemas/tokens";
 
 /**
  * Get all tokens.
- * 
+ *
  * @returns All tokens.
  */
 export async function getAllTokens() {
@@ -40,6 +40,7 @@ export async function insertToken(token: typeof insertTokenSchema._type) {
  * @returns The deleted tokens.
  */
 export async function deleteAllTokens() {
+  // eslint-disable-next-line drizzle/enforce-delete-with-where
   return db.delete(tokens).returning().all();
 }
 

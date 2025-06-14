@@ -7,4 +7,12 @@ export default createConfig({
   rules: {
     ...drizzle.configs.recommended.rules,
   },
+  overrides: [
+    {
+      files: ["src/routes/**/*.ts"],
+      rules: {
+        "drizzle/enforce-delete-with-where": "off",
+      },
+    },
+  ],
 });
