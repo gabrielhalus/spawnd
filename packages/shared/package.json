@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "schemas/*": "./dist/schemas/*.js"
+    "./contracts/*": "./dist/contracts/*.js",
+    "./schemas/*": "./dist/schemas/*.js"
   },
   "scripts": {
     "dev": "tsc --watch",
