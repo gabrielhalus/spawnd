@@ -19,6 +19,7 @@
     "@radix-ui/react-tooltip": "^1.2.7",
     "@spawnd/shared": "workspace:*",
     "@tailwindcss/vite": "^4.1.8",
+    "@tanstack/react-form": "^1.12.3",
     "@tanstack/react-query": "^5.80.6",
     "@tanstack/react-router": "^1.120.18",
     "@tanstack/react-router-devtools": "^1.120.18",
