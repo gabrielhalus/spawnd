@@ -3,10 +3,10 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
-    "rootDir": "src",
+    "baseUrl": "src",
     "paths": {
-      "@/*": [".*"],
+      "@/*": ["./*"],
       "@spawnd/shared/schemas/*": ["../../../packages/shared/src/schemas/*"]
     }
-  }
+  },
 }
