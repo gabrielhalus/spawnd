@@ -1,16 +1,17 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 import { AppSidebar } from "@/components/app-sidebar";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
-export const Route = createFileRoute('/_authenticated/_dashboard')({
+export const Route = createFileRoute("/_authenticated/_dashboard")({
   component: DashboardLayout,
-})
+});
 
 function DashboardLayout() {
-  return <SidebarProvider>
+  return (
+    <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
@@ -31,4 +32,5 @@ function DashboardLayout() {
         <Outlet />
       </SidebarInset>
     </SidebarProvider>
+  );
 }

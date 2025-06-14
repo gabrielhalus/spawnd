@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { LogOut } from "lucide-react";
 
 import {
   Avatar,
@@ -11,7 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
@@ -20,7 +21,6 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { userQueryOptions } from "@/lib/api";
-import { LogOut } from "lucide-react";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -30,7 +30,7 @@ export function NavUser() {
     return "not logged in";
 
   if (isPending)
-    return "pending"
+    return "pending";
 
   return (
     <SidebarMenu>
@@ -83,7 +83,8 @@ export function NavUser() {
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => {
               localStorage.removeItem("accessToken");
-            }}>
+            }}
+            >
               <LogOut />
               Log out
             </DropdownMenuItem>
