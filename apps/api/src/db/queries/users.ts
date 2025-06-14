@@ -7,7 +7,7 @@ import { lower, users } from "@spawnd/shared/schemas/users";
 
 /**
  * Get all users.
- * 
+ *
  * @returns All users.
  */
 export async function getAllUsers() {
@@ -16,7 +16,7 @@ export async function getAllUsers() {
 
 /**
  * Get a user by its ID.
- * 
+ *
  * @param id - The ID to look up.
  * @returns The matching user.
  */
@@ -26,7 +26,7 @@ export async function getUserById(id: string) {
 
 /**
  * Get a user by its email.
- * 
+ *
  * @param email - The email to look up.
  * @returns The matching user.
  */
@@ -36,7 +36,7 @@ export async function getUserByEmail(email: string) {
 
 /**
  * Insert a new user.
- * 
+ *
  * @param user - The user data to insert.
  * @returns The inserted user.
  */
@@ -46,7 +46,7 @@ export async function insertUser(user: typeof insertUserSchema._type) {
 
 /**
  * Delete a user by its ID.
- * 
+ *
  * @param id - The ID of the user to delete.
  * @returns The deleted user.
  */

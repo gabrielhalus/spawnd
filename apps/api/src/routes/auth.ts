@@ -1,9 +1,12 @@
 import { zValidator } from "@hono/zod-validator";
 import { password } from "bun";
 import { Hono } from "hono";
-import { sign } from "hono/jwt";
+import { getCookie, setCookie } from "hono/cookie";
 
-import { getUserByEmail, insertUser } from "@/db/queries/users";
+import { deleteTokenByRefreshToken, getTokenByRefreshToken, insertToken } from "@/db/queries/tokens";
+import { insertUser } from "@/db/queries/users";
+import { getClientInfo } from "@/helpers/get-client-info";
+import { createAccessToken, createRefreshToken, REFRESH_TOKEN_EXPIRATION_SECONDS, validateUser, verifyToken } from "@/lib/auth";
 import env from "@/lib/env";
 import { getUser } from "@/middlewares/auth";
 import { createUserSchema } from "@spawnd/shared/schemas/users";
@@ -12,7 +15,7 @@ export default new Hono()
   /**
    * Register a new user
    * @param c - The context
-   * @returns The new user
+   * @returns The access token
    */
   .post("/register", zValidator("json", createUserSchema), async (c) => {
     const rawUser = await c.req.json();
@@ -21,8 +24,27 @@ export default new Hono()
     const hashedPassword = await password.hash(user.password);
 
     try {
-      const insertedUser = await insertUser({ ...user, password: hashedPassword });
-      return c.json({ success: true, user: { ...insertedUser, password: undefined } });
+      const { password: _, ...insertedUser } = await insertUser({ ...user, password: hashedPassword });
+
+      const accessToken = await createAccessToken(insertedUser.id);
+      const refreshToken = await createRefreshToken(insertedUser.id);
+
+      await insertToken({
+        userId: insertedUser.id,
+        refreshToken,
+        issuedAt: Date.now(),
+        expiresAt: Date.now() + REFRESH_TOKEN_EXPIRATION_SECONDS * 1000,
+      });
+
+      setCookie(c, "refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: env.NODE_ENV === "production",
+        sameSite: "strict",
+        path: "/api/auth/refresh",
+        maxAge: REFRESH_TOKEN_EXPIRATION_SECONDS,
+      });
+
+      return c.json({ success: true, accessToken });
     }
     catch (error: any) {
       if (error instanceof Error && error.message.includes("UNIQUE constraint failed: users.email")) {
@@ -51,34 +73,91 @@ export default new Hono()
   /**
    * Login a user
    * @param c - The context
-   * @returns The user and token
+   * @returns The access token
    */
   .post("/login", async (c) => {
     const credentials = await c.req.json();
 
     try {
-      const user = await getUserByEmail(credentials.email);
+      const userId = await validateUser(credentials);
+      if (!userId)
+        return c.json({ success: false, error: "Invalid credentials" }, 400);
 
-      if (!user) {
-        return c.json({ error: "Invalid credentials" }, 401);
-      }
+      const accessToken = await createAccessToken(userId);
+      const refreshToken = await createRefreshToken(userId);
 
-      const isPasswordValid = await password.verify(credentials.password, user.password);
+      const { userAgent, ip } = getClientInfo(c);
 
-      if (!isPasswordValid) {
-        return c.json({ error: "Invalid credentials" }, 401);
-      }
+      await insertToken({
+        userId,
+        refreshToken,
+        issuedAt: Date.now(),
+        expiresAt: Date.now() + REFRESH_TOKEN_EXPIRATION_SECONDS * 1000,
+        userAgent,
+        ip,
+      });
 
-      const token = await sign({
-        sub: user.id,
-        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30, // 30 days
-      }, env.JWT_SECRET);
+      setCookie(c, "refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: env.NODE_ENV === "production",
+        sameSite: "strict",
+        path: "/api/auth/refresh",
+        maxAge: REFRESH_TOKEN_EXPIRATION_SECONDS,
+      });
 
-      return c.json({ token });
+      return c.json({ success: true, accessToken });
     }
     catch (error: any) {
-      return c.json({ error: error.message }, 500);
+      return c.json({ success: false, error: error.message }, 500);
     }
+  })
+
+  /**
+   * Refresh the access token using the refresh token cookie
+   * @param c - The context
+   * @returns The new access token
+   */
+  .post("/refresh", async (c) => {
+    const refreshToken = getCookie(c, "refreshToken");
+    if (!refreshToken) {
+      return c.json({ success: false, error: "No refresh token provided" }, 401);
+    }
+
+    try {
+      const payload = await verifyToken(refreshToken);
+      if (!payload) {
+        return c.json({ success: false, error: "Invalid refresh token" }, 401);
+      }
+
+      const tokenRecord = await getTokenByRefreshToken(refreshToken);
+      if (!tokenRecord || tokenRecord.expiresAt < Date.now()) {
+        return c.json({ success: false, error: "Refresh token expired or invalid" }, 401);
+      }
+
+      const accessToken = await createAccessToken(payload.sub);
+
+      return c.json({ success: true, accessToken });
+    }
+    catch {
+      await deleteTokenByRefreshToken(refreshToken);
+      return c.json({ success: false, error: "Invalid refresh token" }, 401);
+    }
+  })
+
+  /**
+   * Logout a user by clearing the refresh token cookie
+   * @param c - The context
+   * @returns Success
+   */
+  .post("/logout", async (c) => {
+    setCookie(c, "refreshToken", "", {
+      httpOnly: true,
+      secure: env.NODE_ENV === "production",
+      sameSite: "strict",
+      path: "/api/auth/refresh",
+      maxAge: 0,
+    });
+    return c.json({ success: true });
   })
 
   /**
@@ -88,5 +167,5 @@ export default new Hono()
    */
   .get("/me", getUser, async (c) => {
     const user = c.var.user;
-    return c.json({ user });
+    return c.json({ success: true, user });
   });
