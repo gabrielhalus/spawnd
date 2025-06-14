@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
 
       const parsed = loginOutputSchema.safeParse(responseJson);
       if (!parsed.success) {
-        console.error("Invalid server response");
+        toast.error("Something went wrong")
         return;
       }
 
@@ -38,7 +39,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
         navigate({ to: "/" });
       }
       else {
-        console.error(parsed.data.error);
+        toast.error(parsed.data.error)
       }
     },
   });
