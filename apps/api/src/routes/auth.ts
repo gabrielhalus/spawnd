@@ -4,7 +4,7 @@ import { Hono } from "hono";
 import { getCookie, setCookie } from "hono/cookie";
 
 import { deleteTokenByRefreshToken, getTokenByRefreshToken, insertToken } from "@/db/queries/tokens";
-import { insertUser } from "@/db/queries/users";
+import { getUserByEmail, insertUser } from "@/db/queries/users";
 import { getClientInfo } from "@/helpers/get-client-info";
 import { createAccessToken, createRefreshToken, REFRESH_TOKEN_EXPIRATION_SECONDS, validateUser, verifyToken } from "@/lib/auth";
 import env from "@/lib/env";
@@ -51,16 +51,7 @@ export default new Hono()
         return c.json(
           {
             success: false,
-            error: {
-              issues: [
-                {
-                  code: "unique_constraint",
-                  message: "Email is already taken",
-                  path: ["email"],
-                },
-              ],
-              name: "ZodError",
-            },
+            error: "Email is already taken"
           },
           400,
         );
@@ -168,4 +159,24 @@ export default new Hono()
   .get("/me", getUser, async (c) => {
     const user = c.var.user;
     return c.json({ success: true, user });
+  })
+
+  /**
+   * Check if an email is available
+   * @param c - The context
+   * @returns Whether the email is available
+   */
+  .get("/email-available", async (c) => {
+    const email = c.req.query("email");
+    if (!email) {
+      return c.json({ success: false, error: "Email is required" }, 400);
+    }
+
+    try {
+      const user = await getUserByEmail(email); // If you have a getUserByEmail, use that instead
+      const available = !user;
+      return c.json({ success: true, available });
+    } catch (error: any) {
+      return c.json({ success: false, error: error.message }, 500);
+    }
   });
