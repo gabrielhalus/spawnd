@@ -10,11 +10,13 @@ export default function createConfig(options, ...userConfigs) {
         indent: 2,
         semi: true,
         quotes: "double",
+        braceStyle: "1tbs",
       },
       ...options,
     },
     {
       rules: {
+        "style/brace-style": ["error", "1tbs", { allowSingleLine: true }],
         "ts/consistent-type-definitions": ["error", "type"],
         "no-console": ["warn"],
         "antfu/no-top-level-await": ["off"],
