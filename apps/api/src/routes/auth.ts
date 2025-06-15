@@ -40,7 +40,7 @@ export default new Hono()
         httpOnly: true,
         secure: env.NODE_ENV === "production",
         sameSite: "strict",
-        path: "/api/auth/refresh",
+        path: "/api/auth",
         maxAge: REFRESH_TOKEN_EXPIRATION_SECONDS,
       });
 
@@ -92,7 +92,7 @@ export default new Hono()
         httpOnly: true,
         secure: env.NODE_ENV === "production",
         sameSite: "strict",
-        path: "/api/auth/refresh",
+        path: "/api/auth",
         maxAge: REFRESH_TOKEN_EXPIRATION_SECONDS,
       });
 
@@ -141,13 +141,20 @@ export default new Hono()
    * @returns Success
    */
   .post("/logout", async (c) => {
+    const refreshToken = getCookie(c, "refreshToken");
+    
+    if (refreshToken) {
+      await deleteTokenByRefreshToken(refreshToken);
+    }
+
     setCookie(c, "refreshToken", "", {
       httpOnly: true,
       secure: env.NODE_ENV === "production",
       sameSite: "strict",
-      path: "/api/auth/refresh",
+      path: "/api/auth",
       maxAge: 0,
     });
+
     return c.json({ success: true });
   })
 
@@ -156,7 +163,7 @@ export default new Hono()
    * @param c - The context
    * @returns The current user
    */
-  .get("/me", getUser, async (c) => {
+  .get("/profile", getUser, async (c) => {
     const user = c.var.user;
     return c.json({ success: true, user });
   })
