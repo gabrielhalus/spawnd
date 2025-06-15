@@ -9,8 +9,7 @@ export const Route = createFileRoute("/_authentication")({
     try {
       await queryClient.fetchQuery(userQueryOptions);
       return redirect({ to: "/" });
-    }
-    catch {
+    } catch {
 
     }
   },

@@ -15,8 +15,7 @@ export default new Hono()
     try {
       const users = await getAllUsers();
       return c.json({ success: true, users: users.map(user => ({ ...user, password: undefined })) });
-    }
-    catch (error: any) {
+    } catch (error: any) {
       return c.json({ success: false, error: error.message }, 500);
     }
   })
@@ -32,8 +31,7 @@ export default new Hono()
     try {
       const user = await getUserById(id);
       return c.json({ success: true, user: { ...user, password: undefined } });
-    }
-    catch (error: any) {
+    } catch (error: any) {
       return c.json({ success: false, error: error.message }, 500);
     }
   });

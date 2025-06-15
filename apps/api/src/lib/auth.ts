@@ -51,8 +51,7 @@ export async function verifyToken(token: string): Promise<JwtPayload | null> {
   try {
     const payload = await verify(token, SECRET_KEY) as JwtPayload;
     return payload;
-  }
-  catch {
+  } catch {
     return null;
   }
 }

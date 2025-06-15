@@ -45,8 +45,7 @@ export default new Hono()
       });
 
       return c.json({ success: true, accessToken });
-    }
-    catch (error: any) {
+    } catch (error: any) {
       if (error instanceof Error && error.message.includes("UNIQUE constraint failed: users.email")) {
         return c.json(
           {
@@ -97,8 +96,7 @@ export default new Hono()
       });
 
       return c.json({ success: true, accessToken });
-    }
-    catch (error: any) {
+    } catch (error: any) {
       return c.json({ success: false, error: error.message }, 500);
     }
   })
@@ -128,8 +126,7 @@ export default new Hono()
       const accessToken = await createAccessToken(payload.sub);
 
       return c.json({ success: true, accessToken });
-    }
-    catch {
+    } catch {
       await deleteTokenByRefreshToken(refreshToken);
       return c.json({ success: false, error: "Invalid refresh token" }, 401);
     }
@@ -142,7 +139,7 @@ export default new Hono()
    */
   .post("/logout", async (c) => {
     const refreshToken = getCookie(c, "refreshToken");
-    
+
     if (refreshToken) {
       await deleteTokenByRefreshToken(refreshToken);
     }
@@ -183,8 +180,7 @@ export default new Hono()
       const user = await getUserByEmail(email); // If you have a getUserByEmail, use that instead
       const available = !user;
       return c.json({ success: true, available });
-    }
-    catch (error: any) {
+    } catch (error: any) {
       return c.json({ success: false, error: error.message }, 500);
     }
   });

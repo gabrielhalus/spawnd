@@ -51,8 +51,7 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<"div"
       if (data.success) {
         localStorage.setItem("accessToken", data.accessToken);
         navigate({ to: "/" });
-      }
-      else {
+      } else {
         toast.error(data.error);
       }
     },

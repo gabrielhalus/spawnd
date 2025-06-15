@@ -45,7 +45,7 @@ async function getCurrentUser(): Promise<{ user: UserProfile }> {
     throw new Error("Not authenticated: missing access token");
   }
 
-  const res = await fetchAuthenticated("/api/auth/profile")
+  const res = await fetchAuthenticated("/api/auth/profile");
 
   if (res.status === 401) {
     throw new Error("Not authenticated: invalid token");

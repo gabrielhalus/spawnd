@@ -30,8 +30,7 @@ export const getUser = factory.createMiddleware(async (c, next) => {
   let decoded;
   try {
     decoded = await verify(token, env.JWT_SECRET);
-  }
-  catch {
+  } catch {
     return c.json({ success: false, error: "Unauthorized" }, 401);
   }
 

@@ -15,8 +15,7 @@ let env: Env;
 try {
   // eslint-disable-next-line node/no-process-env
   env = envSchema.parse(process.env);
-}
-catch (e) {
+} catch (e) {
   const error = e as z.ZodError;
   console.error("Invalid environment variables:");
   console.error(error.issues);
