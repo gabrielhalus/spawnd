@@ -1,4 +1,4 @@
-import { loginInputSchema, loginOutputSchema } from "@spawnd/shared/contracts/auth";
+import { registerInputSchema, registerOutputSchema } from "@spawnd/shared/contracts/auth";
 import { useForm } from "@tanstack/react-form";
 import { Link, useNavigate } from "@tanstack/react-router";
 
@@ -9,26 +9,28 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
-export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
+export function RegisterForm({ className, ...props }: React.ComponentProps<"div">) {
   const navigate = useNavigate();
 
   const form = useForm({
     validators: {
-      onChange: loginInputSchema,
+      onChange: registerInputSchema,
     },
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
     onSubmit: async ({ value }) => {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch("/api/auth/register", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(value),
       });
 
       const responseJson = await res.json();
 
-      const parsed = loginOutputSchema.safeParse(responseJson);
+      const parsed = registerOutputSchema.safeParse(responseJson);
       if (!parsed.success) {
         toast.error("Something went wrong")
         return;
@@ -48,7 +50,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome back!</CardTitle>
+          <CardTitle className="text-xl">Welcome aboard!</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={(e) => {
@@ -59,6 +61,32 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
           >
             <div className="grid gap-6">
               <div className="grid gap-6">
+                <div className="grid gap-3">
+                  <form.Field
+                    name="name"
+                    children={field => (
+                      <>
+                        <Label htmlFor={field.name}>Full Name</Label>
+                        <Input
+                          name={field.name}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={e => field.handleChange(e.target.value)}
+                          type="text"
+                          placeholder="John Doe"
+                          required
+                        />
+                        {field.state.meta.isTouched && !field.state.meta.isValid
+                          ? (
+                              <p className="text-destructive text-sm">
+                                {field.state.meta.errors[0]?.message}
+                              </p>
+                            )
+                          : null}
+                      </>
+                    )}
+                  />
+                </div>
                 <div className="grid gap-3">
                   <form.Field
                     name="email"
@@ -115,17 +143,17 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                   children={([canSubmit, isSubmitting]) => (
                     <>
                       <Button type="submit" disabled={!canSubmit}>
-                        {isSubmitting ? "..." : "Sign in"}
+                        {isSubmitting ? "..." : "Sign up"}
                       </Button>
                     </>
                   )}
                 />
               </div>
               <div className="text-center text-sm">
-                Don&apos;t have an account yet?
+                Already have an account?
                 {" "}
-                <Link to="/register" className="underline underline-offset-4">
-                  Sign up
+                <Link to="/login" className="underline underline-offset-4">
+                  Sign in
                 </Link>
               </div>
             </div>
