@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/hooks/use-auth";
 
+import { generateAvatarFallback } from "@/helpers/generate-avatar-fallback";
 import { LogoutButton } from "./authentication/logout-button";
 
 export function NavUser() {
@@ -31,6 +32,8 @@ export function NavUser() {
   if (isLoading) {
     return "pending";
   }
+
+  const avatarFallback = !user.avatar ? generateAvatarFallback(user.name) : undefined;
 
   return (
     <SidebarMenu>
@@ -47,7 +50,7 @@ export function NavUser() {
                     style={{ objectFit: "cover" }}
                   />
                 )}
-                <AvatarFallback className="rounded-lg">GH</AvatarFallback>
+                <AvatarFallback className="rounded-lg">{avatarFallback}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
@@ -72,7 +75,7 @@ export function NavUser() {
                       style={{ objectFit: "cover" }}
                     />
                   )}
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">{avatarFallback}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name}</span>
