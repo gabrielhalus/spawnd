@@ -1,6 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
-import { LogOut } from "lucide-react";
-
 import {
   Avatar,
   AvatarFallback,
@@ -19,14 +16,14 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { userQueryOptions } from "@/lib/api";
-import { LogoutButton } from "./authentication/logout-button";
 import { useAuth } from "@/hooks/use-auth";
+
+import { LogoutButton } from "./authentication/logout-button";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
   const { user, isLoading, isError } = useAuth();
-  
+
   if (isError) {
     return "not logged in";
   }

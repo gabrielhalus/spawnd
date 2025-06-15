@@ -1,15 +1,16 @@
-import { LogOut } from "lucide-react";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+import { LogOut } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
 type Variant = "button" | "dropdown";
 
 type CommonProps = {
   variant?: Variant;
   className?: string;
-}
+};
 
 export function LogoutButton({ variant = "button", className }: CommonProps) {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export function LogoutButton({ variant = "button", className }: CommonProps) {
 
     if (responseJson.success) {
       localStorage.removeItem("accessToken");
-      queryClient.removeQueries({ queryKey: ['get-current-user'] });
+      queryClient.removeQueries({ queryKey: ["get-current-user"] });
       navigate({ to: "/login" });
     }
   }
@@ -39,12 +40,12 @@ export function LogoutButton({ variant = "button", className }: CommonProps) {
       <DropdownMenuItem onClick={handleLogout} className={className}>
         {content}
       </DropdownMenuItem>
-    )
+    );
   }
 
   return (
     <Button onClick={handleLogout} className={className}>
       {content}
     </Button>
-  )
+  );
 }

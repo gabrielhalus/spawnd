@@ -1,10 +1,11 @@
-import { RegisterForm } from '@/components/authentication/register-form'
-import { createFileRoute } from '@tanstack/react-router'
-import { Box } from 'lucide-react'
+import { createFileRoute } from "@tanstack/react-router";
+import { Box } from "lucide-react";
 
-export const Route = createFileRoute('/_authentication/register')({
+import { RegisterForm } from "@/components/authentication/register-form";
+
+export const Route = createFileRoute("/_authentication/register")({
   component: Register,
-})
+});
 
 function Register() {
   return (
@@ -19,5 +20,5 @@ function Register() {
         <RegisterForm />
       </div>
     </div>
-  )
+  );
 }

@@ -1,13 +1,13 @@
 import { loginInputSchema, loginOutputSchema } from "@spawnd/shared/contracts/auth";
 import { useForm } from "@tanstack/react-form";
 import { Link, useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { toast } from "sonner";
 
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
 
       const parsed = loginOutputSchema.safeParse(responseJson);
       if (!parsed.success) {
-        toast.error("Something went wrong")
+        toast.error("Something went wrong");
         return;
       }
 
@@ -39,7 +39,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
         navigate({ to: "/" });
       }
       else {
-        toast.error(parsed.data.error)
+        toast.error(parsed.data.error);
       }
     },
   });

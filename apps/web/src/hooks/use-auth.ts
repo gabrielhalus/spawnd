@@ -1,8 +1,10 @@
-import { userQueryOptions } from "@/lib/api";
-import { UserProfile } from "@spawnd/shared/schemas/users";
+import type { UserProfile } from "@spawnd/shared/schemas/users";
+
 import { useQuery } from "@tanstack/react-query";
 
-type UseAuthReturn = 
+import { userQueryOptions } from "@/lib/api";
+
+type UseAuthReturn =
   | { user: undefined; isLoading: true; isError: false }
   | { user: null; isLoading: false; isError: true }
   | { user: UserProfile; isLoading: false; isError: false };
