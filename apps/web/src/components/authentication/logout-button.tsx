@@ -4,6 +4,7 @@ import { LogOut } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { fetchAuthenticated } from "@/lib/api";
 
 type Variant = "button" | "dropdown";
 
@@ -17,7 +18,7 @@ export function LogoutButton({ variant = "button", className }: CommonProps) {
   const queryClient = useQueryClient();
 
   async function handleLogout() {
-    const res = await fetch("/api/auth/logout", { method: "POST" });
+    const res = await fetchAuthenticated("/api/auth/logout", { method: "POST" });
 
     const json = await res.json();
 
