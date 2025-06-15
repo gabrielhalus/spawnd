@@ -8,6 +8,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { debounceAsync } from "@/lib/debounce";
+
+const checkEmailAvailable = debounceAsync(async (email: string): Promise<string | void> => {
+  const res = await fetch(`/api/auth/email-available?email=${encodeURIComponent(email)}`);
+  const json = await res.json();
+
+  if (!json.available) {
+    return "Email is already taken"
+  }
+}, 500);
 
 export function RegisterForm({ className, ...props }: React.ComponentProps<"div">) {
   const navigate = useNavigate();
@@ -28,20 +38,21 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<"div"
         body: JSON.stringify(value),
       });
 
-      const responseJson = await res.json();
+      const json = await res.json();
 
-      const parsed = registerOutputSchema.safeParse(responseJson);
+      const parsed = registerOutputSchema.safeParse(json);
       if (!parsed.success) {
         toast.error("Something went wrong");
         return;
       }
 
-      if (parsed.data.success) {
-        localStorage.setItem("accessToken", parsed.data.accessToken);
+      const data = parsed.data;
+
+      if (data.success) {
+        localStorage.setItem("accessToken", data.accessToken);
         navigate({ to: "/" });
-      }
-      else {
-        toast.error(parsed.data.error);
+      } else {
+        toast.error(data.error);
       }
     },
   });
@@ -90,6 +101,12 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<"div"
                 <div className="grid gap-3">
                   <form.Field
                     name="email"
+                    validators={{
+                      onChangeAsync: async ({ value }) =>{
+                        const error = await checkEmailAvailable(value);
+                        return error ? { message: error } : undefined;
+                      }
+                    }}
                     children={field => (
                       <>
                         <Label htmlFor={field.name}>Email</Label>

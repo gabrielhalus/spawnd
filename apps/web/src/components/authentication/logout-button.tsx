@@ -19,9 +19,9 @@ export function LogoutButton({ variant = "button", className }: CommonProps) {
   async function handleLogout() {
     const res = await fetch("/api/auth/logout", { method: "POST" });
 
-    const responseJson = await res.json();
+    const json = await res.json();
 
-    if (responseJson.success) {
+    if (json.success) {
       localStorage.removeItem("accessToken");
       queryClient.removeQueries({ queryKey: ["get-current-user"] });
       navigate({ to: "/login" });

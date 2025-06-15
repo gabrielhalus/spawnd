@@ -26,9 +26,9 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
         body: JSON.stringify(value),
       });
 
-      const responseJson = await res.json();
+      const json = await res.json();
 
-      const parsed = loginOutputSchema.safeParse(responseJson);
+      const parsed = loginOutputSchema.safeParse(json);
       if (!parsed.success) {
         toast.error("Something went wrong");
         return;
