@@ -16,9 +16,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { generateAvatarFallback } from "@/helpers/generate-avatar-fallback";
 import { useAuth } from "@/hooks/use-auth";
 
-import { generateAvatarFallback } from "@/helpers/generate-avatar-fallback";
 import { LogoutButton } from "./authentication/logout-button";
 
 export function NavUser() {

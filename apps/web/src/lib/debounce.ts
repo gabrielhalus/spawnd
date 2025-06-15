@@ -3,8 +3,10 @@ export function debounceAsync<F extends (...args: any[]) => Promise<any>>(fn: F,
   let pending: Promise<any> | null;
 
   return (...args: Parameters<F>): Promise<ReturnType<F>> => {
-    if (timer) clearTimeout(timer);
-    if (pending) pending = null;
+    if (timer)
+      clearTimeout(timer);
+    if (pending)
+      pending = null;
 
     return new Promise((resolve) => {
       timer = setTimeout(() => {

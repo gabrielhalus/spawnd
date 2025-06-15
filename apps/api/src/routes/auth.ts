@@ -51,7 +51,7 @@ export default new Hono()
         return c.json(
           {
             success: false,
-            error: "Email is already taken"
+            error: "Email is already taken",
           },
           400,
         );
@@ -176,7 +176,8 @@ export default new Hono()
       const user = await getUserByEmail(email); // If you have a getUserByEmail, use that instead
       const available = !user;
       return c.json({ success: true, available });
-    } catch (error: any) {
+    }
+    catch (error: any) {
       return c.json({ success: false, error: error.message }, 500);
     }
   });

@@ -1,26 +1,28 @@
 import type { UserProfile } from "@spawnd/shared/schemas/users";
+
 import { useQuery } from "@tanstack/react-query";
+
 import { userQueryOptions } from "@/lib/api";
 
 type UseAuthReturn =
   | {
-      user: undefined;
-      isLoading: true;
-      isError: false;
-      isAuthenticated: false;
-    }
+    user: undefined;
+    isLoading: true;
+    isError: false;
+    isAuthenticated: false;
+  }
   | {
-      user: null;
-      isLoading: false;
-      isError: true;
-      isAuthenticated: false;
-    }
+    user: null;
+    isLoading: false;
+    isError: true;
+    isAuthenticated: false;
+  }
   | {
-      user: UserProfile;
-      isLoading: false;
-      isError: false;
-      isAuthenticated: true;
-    };
+    user: UserProfile;
+    isLoading: false;
+    isError: false;
+    isAuthenticated: true;
+  };
 
 export function useAuth(): UseAuthReturn {
   const { data, isLoading, isError } = useQuery(userQueryOptions);

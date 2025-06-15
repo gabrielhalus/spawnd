@@ -7,15 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
 import { debounceAsync } from "@/lib/debounce";
+import { cn } from "@/lib/utils";
 
 const checkEmailAvailable = debounceAsync(async (email: string): Promise<string | void> => {
   const res = await fetch(`/api/auth/email-available?email=${encodeURIComponent(email)}`);
   const json = await res.json();
 
   if (!json.available) {
-    return "Email is already taken"
+    return "Email is already taken";
   }
 }, 500);
 
@@ -51,7 +51,8 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<"div"
       if (data.success) {
         localStorage.setItem("accessToken", data.accessToken);
         navigate({ to: "/" });
-      } else {
+      }
+      else {
         toast.error(data.error);
       }
     },
@@ -102,10 +103,10 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<"div"
                   <form.Field
                     name="email"
                     validators={{
-                      onChangeAsync: async ({ value }) =>{
+                      onChangeAsync: async ({ value }) => {
                         const error = await checkEmailAvailable(value);
                         return error ? { message: error } : undefined;
-                      }
+                      },
                     }}
                     children={field => (
                       <>
