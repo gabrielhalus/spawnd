@@ -15,3 +15,16 @@ export function debounceAsync<F extends (...args: any[]) => Promise<any>>(fn: F,
     }) as Promise<ReturnType<F>>;
   };
 }
+
+export function debounceSync<F extends (...args: any[]) => any>(fn: F, delay: number) {
+  let timer: NodeJS.Timeout | null;
+
+  return (...args: Parameters<F>): void => {
+    if (timer)
+      clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      fn(...args);
+    }, delay);
+  };
+}
