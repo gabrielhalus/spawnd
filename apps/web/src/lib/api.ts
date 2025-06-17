@@ -22,16 +22,16 @@ export const fetchAuthenticated = async (input: RequestInfo, init?: RequestInit)
     });
 
     if (refreshRes.ok) {
-      const newAccessToken = (await refreshRes.json()).accessToken;
+      const data = await refreshRes.json();
+      const newAccessToken = data.accessToken;
       if (newAccessToken) {
         localStorage.setItem("accessToken", newAccessToken);
         headers.set("Authorization", `Bearer ${newAccessToken}`);
+        res = await fetch(input, {
+          ...init,
+          headers,
+        });
       }
-
-      res = await fetch(input, {
-        ...init,
-        headers,
-      });
     }
   }
 
@@ -48,6 +48,7 @@ async function getCurrentUser(): Promise<{ user: UserProfile }> {
   const res = await fetchAuthenticated("/api/auth/profile");
 
   if (res.status === 401) {
+    localStorage.removeItem("accessToken");
     throw new Error("Not authenticated: invalid token");
   }
 
