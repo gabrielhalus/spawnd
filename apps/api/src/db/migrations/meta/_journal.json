@@ -15,6 +15,13 @@
       "when": 1749909673378,
       "tag": "0001_bright_sentinels",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1750236918334,
+      "tag": "0002_early_squirrel_girl",
+      "breakpoints": true
     }
   ]
 }
