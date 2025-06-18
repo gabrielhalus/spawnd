@@ -1,6 +1,7 @@
 import type { UserProfile } from "@spawnd/shared/schemas/users";
 import type { Row } from "@tanstack/react-table";
 
+import { Link } from "@tanstack/react-router";
 import { MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -12,11 +13,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Link } from "@tanstack/react-router";
 
 export function RowActions({ row }: { row: Row<UserProfile> }) {
   const user = row.original;
-  
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -34,7 +34,7 @@ export function RowActions({ row }: { row: Row<UserProfile> }) {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <Link to="/users/$user-id" params={{ "user-id": user.id }}>
-         <DropdownMenuItem>View user</DropdownMenuItem>
+          <DropdownMenuItem>View user</DropdownMenuItem>
         </Link>
       </DropdownMenuContent>
     </DropdownMenu>

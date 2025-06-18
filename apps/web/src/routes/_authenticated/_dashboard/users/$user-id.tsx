@@ -10,7 +10,6 @@ export const Route = createFileRoute(
 });
 
 function RouteComponent() {
-  const { "user-id": userId } = Route.useParams();
   return (
     <div>
       Hello "/_authenticated/_dashboard/users/$user-id"!
