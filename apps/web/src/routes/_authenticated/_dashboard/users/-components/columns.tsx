@@ -1,5 +1,6 @@
 import type { UserProfile } from "@spawnd/shared/schemas/users";
 import type { ColumnDef } from "@tanstack/react-table";
+
 import { RowActions } from "./row-actions";
 
 export const columns: ColumnDef<UserProfile>[] = [
@@ -21,6 +22,6 @@ export const columns: ColumnDef<UserProfile>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <RowActions row={row} />
-  }
+    cell: ({ row }) => <RowActions row={row} />,
+  },
 ];

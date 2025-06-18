@@ -32,7 +32,7 @@ function RouteComponent() {
     return "loading...";
 
   return (
-    <div className="p-4">
+    <div className="border-y">
       <DataTable columns={columns} data={data.users} />
     </div>
   );
