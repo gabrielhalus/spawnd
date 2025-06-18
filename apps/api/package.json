@@ -10,7 +10,6 @@
     "dev": "bun run --watch src/index.ts",
     "lint": "eslint .",
     "check-types": "tsc --noEmit",
-
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate"
   },
