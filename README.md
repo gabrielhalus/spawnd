@@ -11,28 +11,7 @@
   <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Badge" />
 </p>
 
-## 📁 Monorepo Structure
-
-This project uses **Turborepo** to manage multiple packages:
-
-```text
-.
-├── apps/
-│ ├── web/ # React + Vite frontend
-│ └── api/ # Hono backend with Bun
-├── packages/
-│ └── shared/ # Shared types and utilities
-├── .env
-├── bun.lockb
-├── turbo.json
-└── tsconfig.json
-```
-
-## ⚙️ Prerequisites
-
-- [Bun](https://bun.sh/docs/installation)
-
-## 💻 Development
+## Development
 
 ### 1. Clone the repository
 
@@ -85,7 +64,7 @@ cd apps/web
 bun run dev
 ```
 
-## 🔍 Linting (ESLint)
+## Linting (ESLint)
 
 This monorepo includes ESLint configs for all apps and packages. To check code style and catch errors, run:
 
@@ -96,3 +75,11 @@ bun run lint
 This will run linting across all workspaces (backend, frontend, shared packages).
 
 Make sure to fix lint warnings/errors before committing to maintain code quality.
+
+## Author
+
+Gabriel Halus https://github.com/gabrielhalus
+
+## License
+
+Distribued under the CC BY-NC 4.0 License. See [LICENSE](https://github.com/gabrielhalus/spawnd/blob/main/LICENSE) for more information.
