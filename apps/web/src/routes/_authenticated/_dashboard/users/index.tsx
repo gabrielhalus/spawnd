@@ -6,7 +6,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { DataTable } from "@/components/ui/data-table";
 import { fetchAuthenticated } from "@/lib/api";
 
-import { columns } from "./users/-components/columns";
+import { columns } from "./-components/columns";
 
 export const Route = createFileRoute("/_authenticated/_dashboard/users/")({
   component: RouteComponent,

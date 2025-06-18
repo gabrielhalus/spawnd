@@ -1,12 +1,12 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/_dashboard/users")({
-  component: UsersLayout,
+  component: UsersRoute,
   loader: () => ({
     crumb: "Users",
   }),
 });
 
-function UsersLayout() {
+function UsersRoute() {
   return <Outlet />;
 }
