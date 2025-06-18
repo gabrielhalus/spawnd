@@ -30,14 +30,6 @@ export const insertUserSchema = createInsertSchema(users, {
   }),
 });
 
-export const createUserSchema = insertUserSchema.omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-export const updateUserSchema = insertUserSchema.partial();
-
 export function lower(email: AnySQLiteColumn): SQL {
   return sql`(lower(${email}))`;
 }

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { createUserSchema } from "../schemas/users";
+import { insertUserSchema } from "../schemas/users";
 
 // Login
 export const loginInputSchema = z.object({
@@ -24,7 +24,7 @@ export type LoginInput = z.infer<typeof loginInputSchema>;
 export type LoginOutput = z.infer<typeof loginOutputSchema>;
 
 // Register
-export const registerInputSchema = createUserSchema;
+export const registerInputSchema = insertUserSchema;
 
 const registerSuccessSchema = z.object({
   success: z.literal(true),
