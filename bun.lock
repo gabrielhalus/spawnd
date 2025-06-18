@@ -17,6 +17,7 @@
         "@spawnd/eslint-config": "workspace:*",
         "@spawnd/shared": "workspace:*",
         "@spawnd/typescript-config": "workspace:*",
+        "drizzle-orm": "^0.44.2",
         "hono": "^4.7.11",
         "zod": "^3.25.55",
       },
