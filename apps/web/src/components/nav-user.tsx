@@ -1,3 +1,6 @@
+import { Link } from "@tanstack/react-router";
+import { UserRound } from "lucide-react";
+
 import {
   Avatar,
   AvatarFallback,
@@ -6,6 +9,8 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -83,6 +88,15 @@ export function NavUser() {
                 </div>
               </div>
             </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <Link to="/profile">
+                <DropdownMenuItem>
+                  <UserRound />
+                  Your profile
+                </DropdownMenuItem>
+              </Link>
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <LogoutButton variant="dropdown" />
           </DropdownMenuContent>

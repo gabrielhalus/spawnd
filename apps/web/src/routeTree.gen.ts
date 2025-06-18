@@ -17,6 +17,7 @@ import { Route as AuthenticationRegisterImport } from './routes/_authentication/
 import { Route as AuthenticationLoginImport } from './routes/_authentication/login'
 import { Route as AuthenticatedDashboardImport } from './routes/_authenticated/_dashboard'
 import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/_dashboard.index'
+import { Route as AuthenticatedDashboardProfileImport } from './routes/_authenticated/_dashboard/profile'
 
 // Create/Update Routes
 
@@ -51,6 +52,13 @@ const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexImport.update({
     id: '/',
     path: '/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+
+const AuthenticatedDashboardProfileRoute =
+  AuthenticatedDashboardProfileImport.update({
+    id: '/profile',
+    path: '/profile',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 
@@ -93,6 +101,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticationRegisterImport
       parentRoute: typeof AuthenticationImport
     }
+    '/_authenticated/_dashboard/profile': {
+      id: '/_authenticated/_dashboard/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedDashboardProfileImport
+      parentRoute: typeof AuthenticatedDashboardImport
+    }
     '/_authenticated/_dashboard/': {
       id: '/_authenticated/_dashboard/'
       path: '/'
@@ -106,11 +121,13 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthenticatedDashboardRouteChildren {
+  AuthenticatedDashboardProfileRoute: typeof AuthenticatedDashboardProfileRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
 
 const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
   {
+    AuthenticatedDashboardProfileRoute: AuthenticatedDashboardProfileRoute,
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
   }
 
@@ -149,6 +166,7 @@ export interface FileRoutesByFullPath {
   '': typeof AuthenticatedDashboardRouteWithChildren
   '/login': typeof AuthenticationLoginRoute
   '/register': typeof AuthenticationRegisterRoute
+  '/profile': typeof AuthenticatedDashboardProfileRoute
   '/': typeof AuthenticatedDashboardIndexRoute
 }
 
@@ -156,6 +174,7 @@ export interface FileRoutesByTo {
   '': typeof AuthenticationRouteWithChildren
   '/login': typeof AuthenticationLoginRoute
   '/register': typeof AuthenticationRegisterRoute
+  '/profile': typeof AuthenticatedDashboardProfileRoute
   '/': typeof AuthenticatedDashboardIndexRoute
 }
 
@@ -166,14 +185,15 @@ export interface FileRoutesById {
   '/_authenticated/_dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/_authentication/login': typeof AuthenticationLoginRoute
   '/_authentication/register': typeof AuthenticationRegisterRoute
+  '/_authenticated/_dashboard/profile': typeof AuthenticatedDashboardProfileRoute
   '/_authenticated/_dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/login' | '/register' | '/'
+  fullPaths: '' | '/login' | '/register' | '/profile' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '' | '/login' | '/register' | '/'
+  to: '' | '/login' | '/register' | '/profile' | '/'
   id:
     | '__root__'
     | '/_authenticated'
@@ -181,6 +201,7 @@ export interface FileRouteTypes {
     | '/_authenticated/_dashboard'
     | '/_authentication/login'
     | '/_authentication/register'
+    | '/_authenticated/_dashboard/profile'
     | '/_authenticated/_dashboard/'
   fileRoutesById: FileRoutesById
 }
@@ -226,6 +247,7 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/_dashboard.tsx",
       "parent": "/_authenticated",
       "children": [
+        "/_authenticated/_dashboard/profile",
         "/_authenticated/_dashboard/"
       ]
     },
@@ -236,6 +258,10 @@ export const routeTree = rootRoute
     "/_authentication/register": {
       "filePath": "_authentication/register.tsx",
       "parent": "/_authentication"
+    },
+    "/_authenticated/_dashboard/profile": {
+      "filePath": "_authenticated/_dashboard/profile.tsx",
+      "parent": "/_authenticated/_dashboard"
     },
     "/_authenticated/_dashboard/": {
       "filePath": "_authenticated/_dashboard.index.tsx",

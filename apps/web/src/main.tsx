@@ -6,20 +6,22 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import { Toaster } from "@/components/ui/sonner";
+import { routeTree } from "@/routeTree.gen";
 
-import { routeTree } from "./routeTree.gen";
+export const queryClient = new QueryClient();
 
-// Create a new query client instance
-const queryClient = new QueryClient();
+export const router = createRouter({
+  routeTree,
+  context: { queryClient },
+});
 
-// Create a new router instance
-const router = createRouter({ routeTree, context: { queryClient } });
-
-// Register the router instance for type safety
 declare module "@tanstack/react-router" {
   // eslint-disable-next-line ts/consistent-type-definitions
   interface Register {
     router: typeof router;
+    routeMeta: {
+      breadcrumb?: string | ((match: any) => string);
+    };
   }
 }
 
