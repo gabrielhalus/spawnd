@@ -18,6 +18,8 @@ import { Route as AuthenticationLoginImport } from './routes/_authentication/log
 import { Route as AuthenticatedDashboardImport } from './routes/_authenticated/_dashboard'
 import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/_dashboard.index'
 import { Route as AuthenticatedDashboardProfileImport } from './routes/_authenticated/_dashboard/profile'
+import { Route as AuthenticatedDashboardUsersIndexImport } from './routes/_authenticated/_dashboard/users.index'
+import { Route as AuthenticatedDashboardUsersUserIdImport } from './routes/_authenticated/_dashboard/users/$user-id'
 
 // Create/Update Routes
 
@@ -59,6 +61,20 @@ const AuthenticatedDashboardProfileRoute =
   AuthenticatedDashboardProfileImport.update({
     id: '/profile',
     path: '/profile',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+
+const AuthenticatedDashboardUsersIndexRoute =
+  AuthenticatedDashboardUsersIndexImport.update({
+    id: '/users/',
+    path: '/users/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+
+const AuthenticatedDashboardUsersUserIdRoute =
+  AuthenticatedDashboardUsersUserIdImport.update({
+    id: '/users/$user-id',
+    path: '/users/$user-id',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 
@@ -115,6 +131,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardIndexImport
       parentRoute: typeof AuthenticatedDashboardImport
     }
+    '/_authenticated/_dashboard/users/$user-id': {
+      id: '/_authenticated/_dashboard/users/$user-id'
+      path: '/users/$user-id'
+      fullPath: '/users/$user-id'
+      preLoaderRoute: typeof AuthenticatedDashboardUsersUserIdImport
+      parentRoute: typeof AuthenticatedDashboardImport
+    }
+    '/_authenticated/_dashboard/users/': {
+      id: '/_authenticated/_dashboard/users/'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof AuthenticatedDashboardUsersIndexImport
+      parentRoute: typeof AuthenticatedDashboardImport
+    }
   }
 }
 
@@ -123,12 +153,18 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardProfileRoute: typeof AuthenticatedDashboardProfileRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+  AuthenticatedDashboardUsersUserIdRoute: typeof AuthenticatedDashboardUsersUserIdRoute
+  AuthenticatedDashboardUsersIndexRoute: typeof AuthenticatedDashboardUsersIndexRoute
 }
 
 const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
   {
     AuthenticatedDashboardProfileRoute: AuthenticatedDashboardProfileRoute,
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+    AuthenticatedDashboardUsersUserIdRoute:
+      AuthenticatedDashboardUsersUserIdRoute,
+    AuthenticatedDashboardUsersIndexRoute:
+      AuthenticatedDashboardUsersIndexRoute,
   }
 
 const AuthenticatedDashboardRouteWithChildren =
@@ -168,6 +204,8 @@ export interface FileRoutesByFullPath {
   '/register': typeof AuthenticationRegisterRoute
   '/profile': typeof AuthenticatedDashboardProfileRoute
   '/': typeof AuthenticatedDashboardIndexRoute
+  '/users/$user-id': typeof AuthenticatedDashboardUsersUserIdRoute
+  '/users': typeof AuthenticatedDashboardUsersIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -176,6 +214,8 @@ export interface FileRoutesByTo {
   '/register': typeof AuthenticationRegisterRoute
   '/profile': typeof AuthenticatedDashboardProfileRoute
   '/': typeof AuthenticatedDashboardIndexRoute
+  '/users/$user-id': typeof AuthenticatedDashboardUsersUserIdRoute
+  '/users': typeof AuthenticatedDashboardUsersIndexRoute
 }
 
 export interface FileRoutesById {
@@ -187,13 +227,29 @@ export interface FileRoutesById {
   '/_authentication/register': typeof AuthenticationRegisterRoute
   '/_authenticated/_dashboard/profile': typeof AuthenticatedDashboardProfileRoute
   '/_authenticated/_dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/_dashboard/users/$user-id': typeof AuthenticatedDashboardUsersUserIdRoute
+  '/_authenticated/_dashboard/users/': typeof AuthenticatedDashboardUsersIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/login' | '/register' | '/profile' | '/'
+  fullPaths:
+    | ''
+    | '/login'
+    | '/register'
+    | '/profile'
+    | '/'
+    | '/users/$user-id'
+    | '/users'
   fileRoutesByTo: FileRoutesByTo
-  to: '' | '/login' | '/register' | '/profile' | '/'
+  to:
+    | ''
+    | '/login'
+    | '/register'
+    | '/profile'
+    | '/'
+    | '/users/$user-id'
+    | '/users'
   id:
     | '__root__'
     | '/_authenticated'
@@ -203,6 +259,8 @@ export interface FileRouteTypes {
     | '/_authentication/register'
     | '/_authenticated/_dashboard/profile'
     | '/_authenticated/_dashboard/'
+    | '/_authenticated/_dashboard/users/$user-id'
+    | '/_authenticated/_dashboard/users/'
   fileRoutesById: FileRoutesById
 }
 
@@ -248,7 +306,9 @@ export const routeTree = rootRoute
       "parent": "/_authenticated",
       "children": [
         "/_authenticated/_dashboard/profile",
-        "/_authenticated/_dashboard/"
+        "/_authenticated/_dashboard/",
+        "/_authenticated/_dashboard/users/$user-id",
+        "/_authenticated/_dashboard/users/"
       ]
     },
     "/_authentication/login": {
@@ -265,6 +325,14 @@ export const routeTree = rootRoute
     },
     "/_authenticated/_dashboard/": {
       "filePath": "_authenticated/_dashboard.index.tsx",
+      "parent": "/_authenticated/_dashboard"
+    },
+    "/_authenticated/_dashboard/users/$user-id": {
+      "filePath": "_authenticated/_dashboard/users/$user-id.tsx",
+      "parent": "/_authenticated/_dashboard"
+    },
+    "/_authenticated/_dashboard/users/": {
+      "filePath": "_authenticated/_dashboard/users.index.tsx",
       "parent": "/_authenticated/_dashboard"
     }
   }
