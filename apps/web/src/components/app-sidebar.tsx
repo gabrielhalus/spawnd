@@ -1,17 +1,13 @@
 import { Link } from "@tanstack/react-router";
-import { Box, Calendar, DatabaseBackup, Home, Server, Settings2, Users } from "lucide-react";
+import { Box, Calendar, DatabaseBackup, Home, Server, Users } from "lucide-react";
 import React from "react";
 
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
+import { NavUser } from "@/components/nav-user";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 
-import { NavUser } from "./nav-user";
-
 const data = {
-  teams: {
-
-  },
   navMain: [
     {
       title: "Home",
@@ -39,13 +35,7 @@ const data = {
       href: "/users",
     },
   ],
-  navSecondary: [
-    {
-      title: "Settings",
-      icon: Settings2,
-      href: "/settings",
-    },
-  ],
+  navSecondary: [],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
