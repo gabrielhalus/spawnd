@@ -9,7 +9,7 @@ import { getClientInfo } from "@/helpers/get-client-info";
 import { createAccessToken, createRefreshToken, REFRESH_TOKEN_EXPIRATION_SECONDS, validateUser, verifyToken } from "@/lib/auth";
 import env from "@/lib/env";
 import { getUser } from "@/middlewares/auth";
-import { createUserSchema } from "@spawnd/shared/schemas/users";
+import { insertUserSchema } from "@spawnd/shared/schemas/users";
 
 export default new Hono()
   /**
@@ -17,10 +17,10 @@ export default new Hono()
    * @param c - The context
    * @returns The access token
    */
-  .post("/register", zValidator("json", createUserSchema), async (c) => {
+  .post("/register", zValidator("json", insertUserSchema), async (c) => {
     const rawUser = await c.req.json();
 
-    const user = createUserSchema.parse(rawUser);
+    const user = insertUserSchema.parse(rawUser);
     const hashedPassword = await password.hash(user.password);
 
     try {
