@@ -3,7 +3,7 @@ import { password } from "bun";
 import { Hono } from "hono";
 import { getCookie, setCookie } from "hono/cookie";
 
-import { deleteTokenByRefreshToken, getTokenByRefreshToken, insertToken } from "@/db/queries/tokens";
+import { deleteToken, getTokenById, insertToken } from "@/db/queries/tokens";
 import { getUserByEmail, insertUser } from "@/db/queries/users";
 import { getClientInfo } from "@/helpers/get-client-info";
 import { createAccessToken, createRefreshToken, REFRESH_TOKEN_EXPIRATION_SECONDS, validateUser, verifyToken } from "@/lib/auth";
@@ -26,15 +26,14 @@ export default new Hono()
     try {
       const { password: _, ...insertedUser } = await insertUser({ ...user, password: hashedPassword });
 
-      const accessToken = await createAccessToken(insertedUser.id);
-      const refreshToken = await createRefreshToken(insertedUser.id);
-
-      await insertToken({
+      const insertedToken = await insertToken({
         userId: insertedUser.id,
-        refreshToken,
         issuedAt: Date.now(),
         expiresAt: Date.now() + REFRESH_TOKEN_EXPIRATION_SECONDS * 1000,
       });
+
+      const accessToken = await createAccessToken(insertedUser.id);
+      const refreshToken = await createRefreshToken(insertedUser.id, insertedToken.id);
 
       setCookie(c, "refreshToken", refreshToken, {
         httpOnly: true,
@@ -73,19 +72,18 @@ export default new Hono()
       if (!userId)
         return c.json({ success: false, error: "Invalid credentials" }, 400);
 
-      const accessToken = await createAccessToken(userId);
-      const refreshToken = await createRefreshToken(userId);
-
       const { userAgent, ip } = getClientInfo(c);
 
-      await insertToken({
+      const insertedToken = await insertToken({
         userId,
-        refreshToken,
         issuedAt: Date.now(),
         expiresAt: Date.now() + REFRESH_TOKEN_EXPIRATION_SECONDS * 1000,
         userAgent,
         ip,
       });
+
+      const accessToken = await createAccessToken(userId);
+      const refreshToken = await createRefreshToken(userId, insertedToken.id);
 
       setCookie(c, "refreshToken", refreshToken, {
         httpOnly: true,
@@ -113,21 +111,28 @@ export default new Hono()
     }
 
     try {
-      const payload = await verifyToken(refreshToken);
-      if (!payload) {
-        return c.json({ success: false, error: "Invalid refresh token" }, 401);
-      }
+      const payload = await verifyToken(refreshToken, "refresh");
+      if (!payload)
+        throw new Error("Invalid refresh token");
 
-      const tokenRecord = await getTokenByRefreshToken(refreshToken);
+      const { sub, jti } = payload;
+      const tokenRecord = await getTokenById(jti);
+
       if (!tokenRecord || tokenRecord.expiresAt < Date.now()) {
+        if (jti)
+          await deleteToken(jti);
         return c.json({ success: false, error: "Refresh token expired or invalid" }, 401);
       }
 
-      const accessToken = await createAccessToken(payload.sub);
-
+      const accessToken = await createAccessToken(sub);
       return c.json({ success: true, accessToken });
     } catch {
-      await deleteTokenByRefreshToken(refreshToken);
+      // Attempt to clean up invalid token if possible
+      try {
+        const payload = await verifyToken(refreshToken, "refresh");
+        if (payload?.jti)
+          await deleteToken(payload.jti);
+      } catch {}
       return c.json({ success: false, error: "Invalid refresh token" }, 401);
     }
   })
@@ -141,7 +146,12 @@ export default new Hono()
     const refreshToken = getCookie(c, "refreshToken");
 
     if (refreshToken) {
-      await deleteTokenByRefreshToken(refreshToken);
+      try {
+        const payload = await verifyToken(refreshToken, "refresh");
+        if (payload?.jti) {
+          await deleteToken(payload.jti);
+        }
+      } catch {}
     }
 
     setCookie(c, "refreshToken", "", {

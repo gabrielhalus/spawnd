@@ -17,11 +17,11 @@ export async function getAllTokens() {
 /**
  * Get a token by its refresh token.
  *
- * @param refreshToken - The refresh token to look up.
+ * @param id - The ID to look up.
  * @returns The matching token.
  */
-export async function getTokenByRefreshToken(refreshToken: string) {
-  return db.select().from(tokens).where(eq(tokens.refreshToken, refreshToken)).get();
+export async function getTokenById(id: string) {
+  return db.select().from(tokens).where(eq(tokens.id, id)).get();
 }
 
 /**
@@ -45,11 +45,11 @@ export async function deleteAllTokens() {
 }
 
 /**
- * Delete a token by its refresh token.
+ * Delete a token by its ID.
  *
- * @param refreshToken - The refresh token to match for deletion.
+ * @param id - The ID of the token to delete.
  * @returns The deleted token.
  */
-export async function deleteTokenByRefreshToken(refreshToken: string) {
-  return db.delete(tokens).where(eq(tokens.refreshToken, refreshToken)).returning().get();
+export async function deleteToken(id: string) {
+  return db.delete(tokens).where(eq(tokens.id, id)).returning().get();
 }
