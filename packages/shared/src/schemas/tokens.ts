@@ -5,7 +5,6 @@ import { nanoid } from "nanoid";
 export const tokens = sqliteTable("tokens", {
   id: text("id").primaryKey().$defaultFn(() => nanoid()),
   userId: text("user_id").notNull(),
-  refreshToken: text("refresh_token").notNull().unique(),
   issuedAt: integer("issued_at").notNull(),
   expiresAt: integer("expires_at").notNull(),
   revokedAt: integer("revoked_at"),
