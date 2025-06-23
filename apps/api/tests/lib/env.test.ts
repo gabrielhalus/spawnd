@@ -1,7 +1,7 @@
 /* eslint-disable node/no-process-env */
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 
-import { envSchema } from "@/lib/env";
+import { envSchema } from "@spawnd/shared/schemas/env";
 
 const originalEnv = { ...process.env };
 

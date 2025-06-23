@@ -1,9 +1,12 @@
 /* eslint-disable node/no-process-env */
 
+import type { z } from "zod";
+
 import dotenv from "dotenv";
 import fs from "node:fs";
 import path from "node:path";
-import { z } from "zod";
+
+import { envSchema } from "@spawnd/shared/schemas/env";
 
 /**
  * Walk upward from __dirname to find the first file matching a string or RegExp.
@@ -32,16 +35,9 @@ function findEnvFile(filenameOrPattern: string | RegExp): string | undefined {
 const envPath = process.env.NODE_ENV === "test" ? findEnvFile(".env.test") : findEnvFile(/^\.env(?!.*\.(test|example)$).*/);
 dotenv.config({ path: envPath });
 
-export const envSchema = z.object({
-  NODE_ENV: z.enum(["production", "development", "test"]),
-  DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
-  JWT_SECRET: z.string().min(1, "JWT_SECRET is required"),
-});
-
 export type Env = z.infer<typeof envSchema>;
 
 const env = envSchema.parse(process.env);
-
 // eslint-disable-next-line no-console
 console.log(`📦 Loaded env file: ${envPath ? path.basename(envPath) : "none"}`);
 
