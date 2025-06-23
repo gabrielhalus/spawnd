@@ -1,5 +1,5 @@
 import app from "@/app";
-import env from "@/lib/env";
+import "@/lib/env";
 
 // eslint-disable-next-line no-console
 console.log("🚀 Server is running on port 3000");
