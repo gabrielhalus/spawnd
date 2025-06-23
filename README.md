@@ -26,12 +26,12 @@ cd spawnd
 bun install
 ```
 
-### 3. Create API `.env` File
+### 3. Create `.env` File
 
-Before running the database migration, copy the `.env.example` file for the backend:
+Before running the database migration, copy the `env` file for the backend:
 
 ```bash
-cp apps/api/.env.example /apps/api/.env
+cp env .env
 ```
 
 Then **customize any variables** as needed, such as `DATABASE_URL`.
