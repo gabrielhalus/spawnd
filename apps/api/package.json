@@ -9,6 +9,7 @@
     "start": "bun run src/index.ts",
     "dev": "bun run --watch src/index.ts",
     "lint": "eslint .",
+    "test": "vitest",
     "check-types": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate"
@@ -25,8 +26,12 @@
   },
   "devDependencies": {
     "@types/bun": "^1.2.15",
+    "@vitest/coverage-v8": "3.2.4",
+    "@vitest/ui": "^3.2.4",
     "drizzle-kit": "^0.31.1",
     "eslint": "^9.28.0",
-    "eslint-plugin-drizzle": "^0.2.3"
+    "eslint-plugin-drizzle": "^0.2.3",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.4"
   }
 }

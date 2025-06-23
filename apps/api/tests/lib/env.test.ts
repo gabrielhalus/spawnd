@@ -1,5 +1,5 @@
 /* eslint-disable node/no-process-env */
-import { afterEach, beforeEach, describe, expect, it } from "bun:test";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import { envSchema } from "@spawnd/shared/schemas/env";
 
