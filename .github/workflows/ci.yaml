@@ -31,4 +31,4 @@ jobs:
         uses: ./.github/actions/setup-bun-env
 
       - name: Run tests
-        run: bun test
+        run: bun run test

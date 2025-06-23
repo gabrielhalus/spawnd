@@ -13,6 +13,10 @@
     "lint": {
       "cache": false,
       "persistent": true
+    },
+    "test": {
+      "cache": false,
+      "persistent": true
     }
   }
 }

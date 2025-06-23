@@ -2,9 +2,10 @@
   "name": "spawnd",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
+    "build": "turbo run build --",
+    "dev": "turbo run dev --",
     "lint": "turbo run lint --",
+    "test": "turbo run test --",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
 
