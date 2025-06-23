@@ -1,4 +1,9 @@
+import dotenv from "dotenv";
+import path from "node:path";
 import { z } from "zod";
+
+// eslint-disable-next-line node/no-process-env
+dotenv.config({ path: process.env.NODE_ENV === "test" ? path.resolve(process.cwd(), ".env.test") : undefined });
 
 const envSchema = z.object({
   NODE_ENV: z.enum(["production", "development", "test"]),

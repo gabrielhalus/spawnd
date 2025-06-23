@@ -19,6 +19,7 @@
     "@spawnd/eslint-config": "workspace:*",
     "@spawnd/shared": "workspace:*",
     "@spawnd/typescript-config": "workspace:*",
+    "dotenv": "^16.5.0",
     "hono": "^4.7.11",
     "zod": "^3.25.55"
   },
