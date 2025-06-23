@@ -31,7 +31,7 @@ bun install
 Before running the database migration, copy the `env` file for the backend:
 
 ```bash
-cp env .env
+cp env .env.local
 ```
 
 Then **customize any variables** as needed, such as `DATABASE_URL`.
