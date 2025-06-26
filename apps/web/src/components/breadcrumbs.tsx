@@ -1,4 +1,5 @@
 import { Link, useMatches } from "@tanstack/react-router";
+import React from "react";
 
 import {
   Breadcrumb,
@@ -24,22 +25,22 @@ export function Breadcrumbs() {
         {items.map((item, i) => {
           const isLast = i === items.length - 1;
           return (
-            <BreadcrumbItem key={item.id}>
-              {isLast
-                ? (
-                    <BreadcrumbPage className="line-clamp-1">
-                      {item.label}
-                    </BreadcrumbPage>
-                  )
-                : (
-                    <>
+            <React.Fragment key={item.id}>
+              <BreadcrumbItem>
+                {isLast
+                  ? (
+                      <BreadcrumbPage className="line-clamp-1">
+                        {item.label}
+                      </BreadcrumbPage>
+                    )
+                  : (
                       <Link to={item.pathname} params={item.params} className="line-clamp-1 hover:underline">
                         {item.label}
                       </Link>
-                      <BreadcrumbSeparator />
-                    </>
-                  )}
-            </BreadcrumbItem>
+                    )}
+              </BreadcrumbItem>
+              {!isLast && <BreadcrumbSeparator />}
+            </React.Fragment>
           );
         })}
       </BreadcrumbList>
