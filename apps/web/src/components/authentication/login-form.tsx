@@ -39,7 +39,6 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
 
       if (parsed.data.success) {
         localStorage.setItem("accessToken", parsed.data.accessToken);
-        console.log(redirectTo);
         navigate({ to: redirectTo });
       } else {
         toast.error(parsed.data.error);

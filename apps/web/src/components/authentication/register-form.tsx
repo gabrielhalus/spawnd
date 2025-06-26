@@ -1,6 +1,6 @@
 import { registerInputSchema, registerOutputSchema } from "@spawnd/shared/contracts/auth";
 import { useForm } from "@tanstack/react-form";
-import { Link, useNavigate, useRouteContext, useRouter, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
