@@ -1,6 +1,6 @@
 import { loginInputSchema, loginOutputSchema } from "@spawnd/shared/contracts/auth";
 import { useForm } from "@tanstack/react-form";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,9 @@ import { cn } from "@/lib/utils";
 
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
   const navigate = useNavigate();
+  const location = useRouterState({ select: s => s.location });
+  const searchParams = new URLSearchParams(location.searchStr);
+  const redirectTo = searchParams.get("redirect") || "/";
 
   const form = useForm({
     validators: {
@@ -36,7 +39,8 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
 
       if (parsed.data.success) {
         localStorage.setItem("accessToken", parsed.data.accessToken);
-        navigate({ to: "/" });
+        console.log(redirectTo);
+        navigate({ to: redirectTo });
       } else {
         toast.error(parsed.data.error);
       }
@@ -123,7 +127,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
               <div className="text-center text-sm">
                 Don&apos;t have an account yet?
                 {" "}
-                <Link to="/register" className="underline underline-offset-4">
+                <Link to="/register" search={location.search} className="underline underline-offset-4">
                   Sign up
                 </Link>
               </div>

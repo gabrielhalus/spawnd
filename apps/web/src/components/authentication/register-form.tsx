@@ -1,6 +1,6 @@
 import { registerInputSchema, registerOutputSchema } from "@spawnd/shared/contracts/auth";
 import { useForm } from "@tanstack/react-form";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate, useRouteContext, useRouter, useRouterState } from "@tanstack/react-router";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,9 @@ const checkEmailAvailable = debounceAsync(async (email: string): Promise<string 
 
 export function RegisterForm({ className, ...props }: React.ComponentProps<"div">) {
   const navigate = useNavigate();
+  const location = useRouterState({ select: s => s.location });
+  const searchParams = new URLSearchParams(location.searchStr);
+  const redirectTo = searchParams.get("redirect") || "/";
 
   const form = useForm({
     validators: {
@@ -50,7 +53,7 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<"div"
 
       if (data.success) {
         localStorage.setItem("accessToken", data.accessToken);
-        navigate({ to: "/" });
+        navigate({ to: redirectTo });
       } else {
         toast.error(data.error);
       }
@@ -169,7 +172,7 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<"div"
               <div className="text-center text-sm">
                 Already have an account?
                 {" "}
-                <Link to="/login" className="underline underline-offset-4">
+                <Link to="/login" search={location.search} className="underline underline-offset-4">
                   Sign in
                 </Link>
               </div>
