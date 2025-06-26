@@ -19,6 +19,11 @@ export const columns: ColumnDef<UserProfile>[] = [
   {
     accessorKey: "createdAt",
     header: "Created At",
+    cell: ({ row }) => {
+      const timestamp = Number(row.getValue("createdAt"));
+      const createdAt = new Date(timestamp);
+      return Number.isNaN(createdAt.getTime()) ? <>Invalid date</> : <>{createdAt.toLocaleDateString()}</>;
+    },
   },
   {
     id: "actions",
