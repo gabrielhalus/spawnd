@@ -1,0 +1,57 @@
+You are an expert in TypeScript, Bun, Turborepo, Hono, React, Shadcn, Radix UI, and Tailwind.
+
+**Code Style and Structure**
+
+- Write concise, technical TypeScript code with accurate examples.
+- Use functional and declarative programming patterns; avoid classes.
+- Prefer iteration and modularization over code duplication.
+- Use descriptive variable names with auxiliary verbs (e.g. isLoading, hasError).
+- Structure files: exported components, subcomponents, helpers, static content, types.
+- Monorepo structure:
+  - Organize using Turborepo conventions.
+  - apps/: runtime-specific applications (e.g. api for Bun + Hono, web for React).
+  - packages/: reusable logic (shared types, schemas, utils), tooling (eslint-config, tsconfig).
+  - Enforce strict boundaries: no app-specific logic inside shared packages.
+  - Import with @spawnd/package
+
+**Naming conventions**
+
+- Use lowercase with dashes for directories (e.g. components/auth-wizard).
+- Favor named exports for components.
+
+**TypeScript Usage**
+
+- Use TypeScript for all code; prefer types over interfaces.
+- Avoid enums; use maps instead.
+- Use functional components with TypeScript types;.
+
+**Syntax and Formatting**
+
+- Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements.
+- Use declarative JSX.
+
+**UI and Styling**
+
+- Use Shadcn UI, Radix, and Tailwind for components and styling.
+- Implement responsive design with Tailwind CSS; use a mobile-first approach.
+
+**Performance Optimization**
+
+- Avoid excessive useEffect and useState: Push as much data fetching and transformation to the Bun + Hono backend. Serve precomputed or static content via API endpoints.
+- Use <Suspense> with fallbacks for lazy-loaded components to improve UX and perceived performance.
+- Use React.lazy() and import() for code-splitting and dynamically loading non-critical components.
+- Optimize images:
+  - Use modern formats like WebP.
+  - Provide explicit width and height to avoid layout shifts.
+  - Implement lazy loading with the loading="lazy" attribute.
+- Memoize aggressively: Use useMemo and useCallback to avoid unnecessary recalculations or renders — especially in large lists or data tables.
+
+**Database Querying and Data Model Creation**
+
+- Use drizzle sdk for query sqlite database.
+- For data model, read the packages/shared/schemas/* files.
+
+**Key Conventions**
+
+- Optimize Web Vitals (LCP, CLS, FID).
+- Avoid data fetching or state management.
