@@ -1,7 +1,7 @@
 import type { UserProfile } from "@spawnd/shared/schemas/users";
 import type { Row } from "@tanstack/react-table";
 
-import { Copy, MoreHorizontal, Trash2 } from "lucide-react";
+import { Copy, MoreHorizontal } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -13,8 +13,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { TimeoutButton } from "@/components/ui/timeout-button";
-import { fetchAuthenticated } from "@/lib/api/http";
+
+import { UserDeleteButton } from "./user-delete-button";
 
 export function RowActions({ row }: { row: Row<UserProfile> }) {
   const user = row.original;
@@ -30,28 +30,16 @@ export function RowActions({ row }: { row: Row<UserProfile> }) {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuItem
-          onClick={() => navigator.clipboard.writeText(user.id)}
+          onClick={() => {
+            navigator.clipboard.writeText(user.id);
+            toast.success("User ID copied to clipboard");
+          }}
         >
           <Copy className="h-4 w-4" />
           Copy user ID
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <TimeoutButton
-          variant="destructive"
-          size="sm"
-          className="rounded-sm"
-          noExpansion
-          timeout={2000}
-          onClick={async () => {
-            const res = await fetchAuthenticated(`/api/users/${user.id}`, {
-              method: "DELETE",
-            });
-            res.ok ? toast.success("User deleted") : toast.error("Failed to delete user");
-          }}
-        >
-          <Trash2 className="h-4 w-4" />
-          Delete user
-        </TimeoutButton>
+        <UserDeleteButton id={user.id} />
       </DropdownMenuContent>
     </DropdownMenu>
   );
