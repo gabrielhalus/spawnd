@@ -22,6 +22,13 @@
       "when": 1750236918334,
       "tag": "0002_early_squirrel_girl",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1751290000240,
+      "tag": "0003_clammy_demogoblin",
+      "breakpoints": true
     }
   ]
 }

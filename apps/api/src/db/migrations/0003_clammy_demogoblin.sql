@@ -1,0 +1,21 @@
+CREATE TABLE `servers` (
+	`id` text PRIMARY KEY NOT NULL,
+	`name` text NOT NULL,
+	`status` text DEFAULT 'offline' NOT NULL,
+	`version` text NOT NULL,
+	`ip_address` text NOT NULL,
+	`port` integer NOT NULL,
+	`max_players` integer DEFAULT 20 NOT NULL,
+	`current_players` integer DEFAULT 0 NOT NULL,
+	`world_name` text DEFAULT 'world' NOT NULL,
+	`game_mode` text DEFAULT 'survival' NOT NULL,
+	`difficulty` text DEFAULT 'normal' NOT NULL,
+	`server_jar_path` text,
+	`server_directory` text NOT NULL,
+	`java_args` text,
+	`memory_min` integer DEFAULT 1024 NOT NULL,
+	`memory_max` integer DEFAULT 2048 NOT NULL,
+	`auto_start` integer DEFAULT false NOT NULL,
+	`created_at` integer NOT NULL,
+	`updated_at` integer NOT NULL
+);
