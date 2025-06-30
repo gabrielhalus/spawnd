@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { UserRound } from "lucide-react";
 
+import { LogoutButton } from "@/components/layout/logout-button";
 import {
   Avatar,
   AvatarFallback,
@@ -23,8 +24,6 @@ import {
 } from "@/components/ui/sidebar";
 import { generateAvatarFallback } from "@/helpers/generate-avatar-fallback";
 import { useAuth } from "@/hooks/use-auth";
-
-import { LogoutButton } from "./authentication/logout-button";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
