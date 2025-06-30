@@ -48,6 +48,6 @@ export const columns: ColumnDef<UserProfile>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <RowActions row={row} />,
+    cell: ({ row }) => <div className="flex justify-end"><RowActions row={row} /></div>,
   },
 ];

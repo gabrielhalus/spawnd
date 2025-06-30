@@ -13,21 +13,60 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Skeleton } from "@/components/ui/skeleton"
 
-interface DataTableProps<TData, TValue> {
+type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  data: TData[] | undefined
+  isPending?: boolean
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  isPending = false,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
-    data,
+    data: data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
+
+  if (isPending) {
+    return (
+      <Table>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => {
+                return (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                )
+              })}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {Array.from({ length: 3 }).map((_, index) => (
+            <TableRow key={index}>
+              {Array.from({ length: columns.length }).map((_, cellIndex) => (
+                <TableCell key={cellIndex}>
+                  <Skeleton className="h-4 w-full" />
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    )
+  }
 
   return (
     <Table>

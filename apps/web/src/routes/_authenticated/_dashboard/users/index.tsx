@@ -11,17 +11,11 @@ export const Route = createFileRoute("/_authenticated/_dashboard/users/")({
 });
 
 function RouteComponent() {
-  const { isPending, error, data } = useQuery(getAllUsersQueryOptions);
-
-  if (error)
-    return error.message;
-
-  if (isPending)
-    return "loading...";
+  const { isPending, data } = useQuery(getAllUsersQueryOptions);
 
   return (
     <div className="border-y">
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} isPending={isPending} data={data} />
     </div>
   );
 }
