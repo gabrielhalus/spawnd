@@ -50,6 +50,6 @@ export async function insertUser(user: typeof insertUserSchema._type) {
  * @param id - The ID of the user to delete.
  * @returns The deleted user.
  */
-export async function deleteUser(id: string) {
+export async function deleteUserById(id: string) {
   return db.delete(users).where(eq(users.id, id)).returning().get();
 }
