@@ -1,3 +1,4 @@
+/* eslint-disable drizzle/enforce-delete-with-where */
 import { Hono } from "hono";
 
 import { deleteUserById, getAllUsers, getUserById } from "@/db/queries/users";

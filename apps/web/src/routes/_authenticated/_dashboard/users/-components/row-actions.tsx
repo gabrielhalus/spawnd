@@ -2,6 +2,7 @@ import type { UserProfile } from "@spawnd/shared/schemas/users";
 import type { Row } from "@tanstack/react-table";
 
 import { Copy, MoreHorizontal, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,11 +11,10 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { TimeoutButton } from "@/components/ui/timeout-button";
 import { fetchAuthenticated } from "@/lib/api";
-import { toast } from "sonner";
 
 export function RowActions({ row }: { row: Row<UserProfile> }) {
   const user = row.original;
