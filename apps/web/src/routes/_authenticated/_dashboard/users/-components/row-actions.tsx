@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { TimeoutButton } from "@/components/ui/timeout-button";
-import { fetchAuthenticated } from "@/lib/api";
+import { fetchAuthenticated } from "@/lib/api/http";
 
 export function RowActions({ row }: { row: Row<UserProfile> }) {
   const user = row.original;

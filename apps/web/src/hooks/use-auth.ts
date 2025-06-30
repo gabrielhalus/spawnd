@@ -2,7 +2,7 @@ import type { UserProfile } from "@spawnd/shared/schemas/users";
 
 import { useQuery } from "@tanstack/react-query";
 
-import { userQueryOptions } from "@/lib/api";
+import { userQueryOptions } from "@/lib/queries/auth";
 
 type UseAuthReturn =
   | {

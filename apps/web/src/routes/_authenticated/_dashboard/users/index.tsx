@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { DataTable } from "@/components/ui/data-table";
-import { fetchAuthenticated } from "@/lib/api";
+import { fetchAuthenticated } from "@/lib/api/http";
 
 import { columns } from "./-components/columns";
 
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/_authenticated/_dashboard/users/")({
   component: RouteComponent,
 });
 
-const getUsers = async (): Promise<{ users: UserProfile[] }> => {
+const getAllUsers = async (): Promise<{ users: UserProfile[] }> => {
   const res = await fetchAuthenticated("/api/users");
   if (!res.ok)
     throw new Error("Server error");
@@ -21,8 +21,9 @@ const getUsers = async (): Promise<{ users: UserProfile[] }> => {
 
 function RouteComponent() {
   const { isPending, error, data } = useQuery({
-    queryKey: ["get-users"],
-    queryFn: getUsers,
+    queryKey: ["get-all-users"],
+    queryFn: getAllUsers,
+    staleTime: 1000 * 60 * 5,
   });
 
   if (error)

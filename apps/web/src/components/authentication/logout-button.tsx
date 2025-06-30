@@ -4,7 +4,7 @@ import { LogOut } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { fetchAuthenticated } from "@/lib/api";
+import { fetchAuthenticated } from "@/lib/api/http";
 
 type Variant = "button" | "dropdown";
 
