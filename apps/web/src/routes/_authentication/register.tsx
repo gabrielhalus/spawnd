@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Box } from "lucide-react";
 
-import { RegisterForm } from "@/components/authentication/register-form";
+import { RegisterForm } from "./-components/register-form";
 
 export const Route = createFileRoute("/_authentication/register")({
   component: Register,
