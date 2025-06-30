@@ -22,3 +22,13 @@ export async function getCurrentUser(): Promise<{ user: UserProfile }> {
 
   return await res.json();
 }
+
+export async function logout() {
+  const res = await fetchAuthenticated("/api/auth/logout", { method: "POST" });
+
+  if (!res.ok) {
+    throw new Error("Failed to logout");
+  }
+
+  return res.json();
+}
