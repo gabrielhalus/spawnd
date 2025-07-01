@@ -7,10 +7,10 @@ import { getAllUsersQueryOptions } from "@/lib/queries/user";
 import { columns } from "./-components/columns";
 
 export const Route = createFileRoute("/_authenticated/_dashboard/users/")({
-  component: RouteComponent,
+  component: Users,
 });
 
-function RouteComponent() {
+function Users() {
   const { isPending, data } = useQuery(getAllUsersQueryOptions);
 
   return (

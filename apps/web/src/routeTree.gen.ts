@@ -19,7 +19,13 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/_dashboard/index'
 import { Route as AuthenticatedDashboardProfileImport } from './routes/_authenticated/_dashboard/profile'
 import { Route as AuthenticatedDashboardUsersRouteImport } from './routes/_authenticated/_dashboard/users/route'
+import { Route as AuthenticatedDashboardServersRouteImport } from './routes/_authenticated/_dashboard/servers/route'
+import { Route as AuthenticatedDashboardSchedulesRouteImport } from './routes/_authenticated/_dashboard/schedules/route'
+import { Route as AuthenticatedDashboardBackupsRouteImport } from './routes/_authenticated/_dashboard/backups/route'
 import { Route as AuthenticatedDashboardUsersIndexImport } from './routes/_authenticated/_dashboard/users/index'
+import { Route as AuthenticatedDashboardServersIndexImport } from './routes/_authenticated/_dashboard/servers/index'
+import { Route as AuthenticatedDashboardSchedulesIndexImport } from './routes/_authenticated/_dashboard/schedules/index'
+import { Route as AuthenticatedDashboardBackupsIndexImport } from './routes/_authenticated/_dashboard/backups/index'
 
 // Create/Update Routes
 
@@ -72,11 +78,53 @@ const AuthenticatedDashboardUsersRouteRoute =
     getParentRoute: () => AuthenticatedDashboardRouteRoute,
   } as any)
 
+const AuthenticatedDashboardServersRouteRoute =
+  AuthenticatedDashboardServersRouteImport.update({
+    id: '/servers',
+    path: '/servers',
+    getParentRoute: () => AuthenticatedDashboardRouteRoute,
+  } as any)
+
+const AuthenticatedDashboardSchedulesRouteRoute =
+  AuthenticatedDashboardSchedulesRouteImport.update({
+    id: '/schedules',
+    path: '/schedules',
+    getParentRoute: () => AuthenticatedDashboardRouteRoute,
+  } as any)
+
+const AuthenticatedDashboardBackupsRouteRoute =
+  AuthenticatedDashboardBackupsRouteImport.update({
+    id: '/backups',
+    path: '/backups',
+    getParentRoute: () => AuthenticatedDashboardRouteRoute,
+  } as any)
+
 const AuthenticatedDashboardUsersIndexRoute =
   AuthenticatedDashboardUsersIndexImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => AuthenticatedDashboardUsersRouteRoute,
+  } as any)
+
+const AuthenticatedDashboardServersIndexRoute =
+  AuthenticatedDashboardServersIndexImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedDashboardServersRouteRoute,
+  } as any)
+
+const AuthenticatedDashboardSchedulesIndexRoute =
+  AuthenticatedDashboardSchedulesIndexImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedDashboardSchedulesRouteRoute,
+  } as any)
+
+const AuthenticatedDashboardBackupsIndexRoute =
+  AuthenticatedDashboardBackupsIndexImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedDashboardBackupsRouteRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -118,6 +166,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticationRegisterImport
       parentRoute: typeof AuthenticationRouteImport
     }
+    '/_authenticated/_dashboard/backups': {
+      id: '/_authenticated/_dashboard/backups'
+      path: '/backups'
+      fullPath: '/backups'
+      preLoaderRoute: typeof AuthenticatedDashboardBackupsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRouteImport
+    }
+    '/_authenticated/_dashboard/schedules': {
+      id: '/_authenticated/_dashboard/schedules'
+      path: '/schedules'
+      fullPath: '/schedules'
+      preLoaderRoute: typeof AuthenticatedDashboardSchedulesRouteImport
+      parentRoute: typeof AuthenticatedDashboardRouteImport
+    }
+    '/_authenticated/_dashboard/servers': {
+      id: '/_authenticated/_dashboard/servers'
+      path: '/servers'
+      fullPath: '/servers'
+      preLoaderRoute: typeof AuthenticatedDashboardServersRouteImport
+      parentRoute: typeof AuthenticatedDashboardRouteImport
+    }
     '/_authenticated/_dashboard/users': {
       id: '/_authenticated/_dashboard/users'
       path: '/users'
@@ -139,6 +208,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardIndexImport
       parentRoute: typeof AuthenticatedDashboardRouteImport
     }
+    '/_authenticated/_dashboard/backups/': {
+      id: '/_authenticated/_dashboard/backups/'
+      path: '/'
+      fullPath: '/backups/'
+      preLoaderRoute: typeof AuthenticatedDashboardBackupsIndexImport
+      parentRoute: typeof AuthenticatedDashboardBackupsRouteImport
+    }
+    '/_authenticated/_dashboard/schedules/': {
+      id: '/_authenticated/_dashboard/schedules/'
+      path: '/'
+      fullPath: '/schedules/'
+      preLoaderRoute: typeof AuthenticatedDashboardSchedulesIndexImport
+      parentRoute: typeof AuthenticatedDashboardSchedulesRouteImport
+    }
+    '/_authenticated/_dashboard/servers/': {
+      id: '/_authenticated/_dashboard/servers/'
+      path: '/'
+      fullPath: '/servers/'
+      preLoaderRoute: typeof AuthenticatedDashboardServersIndexImport
+      parentRoute: typeof AuthenticatedDashboardServersRouteImport
+    }
     '/_authenticated/_dashboard/users/': {
       id: '/_authenticated/_dashboard/users/'
       path: '/'
@@ -150,6 +240,51 @@ declare module '@tanstack/react-router' {
 }
 
 // Create and export the route tree
+
+interface AuthenticatedDashboardBackupsRouteRouteChildren {
+  AuthenticatedDashboardBackupsIndexRoute: typeof AuthenticatedDashboardBackupsIndexRoute
+}
+
+const AuthenticatedDashboardBackupsRouteRouteChildren: AuthenticatedDashboardBackupsRouteRouteChildren =
+  {
+    AuthenticatedDashboardBackupsIndexRoute:
+      AuthenticatedDashboardBackupsIndexRoute,
+  }
+
+const AuthenticatedDashboardBackupsRouteRouteWithChildren =
+  AuthenticatedDashboardBackupsRouteRoute._addFileChildren(
+    AuthenticatedDashboardBackupsRouteRouteChildren,
+  )
+
+interface AuthenticatedDashboardSchedulesRouteRouteChildren {
+  AuthenticatedDashboardSchedulesIndexRoute: typeof AuthenticatedDashboardSchedulesIndexRoute
+}
+
+const AuthenticatedDashboardSchedulesRouteRouteChildren: AuthenticatedDashboardSchedulesRouteRouteChildren =
+  {
+    AuthenticatedDashboardSchedulesIndexRoute:
+      AuthenticatedDashboardSchedulesIndexRoute,
+  }
+
+const AuthenticatedDashboardSchedulesRouteRouteWithChildren =
+  AuthenticatedDashboardSchedulesRouteRoute._addFileChildren(
+    AuthenticatedDashboardSchedulesRouteRouteChildren,
+  )
+
+interface AuthenticatedDashboardServersRouteRouteChildren {
+  AuthenticatedDashboardServersIndexRoute: typeof AuthenticatedDashboardServersIndexRoute
+}
+
+const AuthenticatedDashboardServersRouteRouteChildren: AuthenticatedDashboardServersRouteRouteChildren =
+  {
+    AuthenticatedDashboardServersIndexRoute:
+      AuthenticatedDashboardServersIndexRoute,
+  }
+
+const AuthenticatedDashboardServersRouteRouteWithChildren =
+  AuthenticatedDashboardServersRouteRoute._addFileChildren(
+    AuthenticatedDashboardServersRouteRouteChildren,
+  )
 
 interface AuthenticatedDashboardUsersRouteRouteChildren {
   AuthenticatedDashboardUsersIndexRoute: typeof AuthenticatedDashboardUsersIndexRoute
@@ -167,6 +302,9 @@ const AuthenticatedDashboardUsersRouteRouteWithChildren =
   )
 
 interface AuthenticatedDashboardRouteRouteChildren {
+  AuthenticatedDashboardBackupsRouteRoute: typeof AuthenticatedDashboardBackupsRouteRouteWithChildren
+  AuthenticatedDashboardSchedulesRouteRoute: typeof AuthenticatedDashboardSchedulesRouteRouteWithChildren
+  AuthenticatedDashboardServersRouteRoute: typeof AuthenticatedDashboardServersRouteRouteWithChildren
   AuthenticatedDashboardUsersRouteRoute: typeof AuthenticatedDashboardUsersRouteRouteWithChildren
   AuthenticatedDashboardProfileRoute: typeof AuthenticatedDashboardProfileRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
@@ -174,6 +312,12 @@ interface AuthenticatedDashboardRouteRouteChildren {
 
 const AuthenticatedDashboardRouteRouteChildren: AuthenticatedDashboardRouteRouteChildren =
   {
+    AuthenticatedDashboardBackupsRouteRoute:
+      AuthenticatedDashboardBackupsRouteRouteWithChildren,
+    AuthenticatedDashboardSchedulesRouteRoute:
+      AuthenticatedDashboardSchedulesRouteRouteWithChildren,
+    AuthenticatedDashboardServersRouteRoute:
+      AuthenticatedDashboardServersRouteRouteWithChildren,
     AuthenticatedDashboardUsersRouteRoute:
       AuthenticatedDashboardUsersRouteRouteWithChildren,
     AuthenticatedDashboardProfileRoute: AuthenticatedDashboardProfileRoute,
@@ -214,9 +358,15 @@ export interface FileRoutesByFullPath {
   '': typeof AuthenticatedDashboardRouteRouteWithChildren
   '/login': typeof AuthenticationLoginRoute
   '/register': typeof AuthenticationRegisterRoute
+  '/backups': typeof AuthenticatedDashboardBackupsRouteRouteWithChildren
+  '/schedules': typeof AuthenticatedDashboardSchedulesRouteRouteWithChildren
+  '/servers': typeof AuthenticatedDashboardServersRouteRouteWithChildren
   '/users': typeof AuthenticatedDashboardUsersRouteRouteWithChildren
   '/profile': typeof AuthenticatedDashboardProfileRoute
   '/': typeof AuthenticatedDashboardIndexRoute
+  '/backups/': typeof AuthenticatedDashboardBackupsIndexRoute
+  '/schedules/': typeof AuthenticatedDashboardSchedulesIndexRoute
+  '/servers/': typeof AuthenticatedDashboardServersIndexRoute
   '/users/': typeof AuthenticatedDashboardUsersIndexRoute
 }
 
@@ -226,6 +376,9 @@ export interface FileRoutesByTo {
   '/register': typeof AuthenticationRegisterRoute
   '/profile': typeof AuthenticatedDashboardProfileRoute
   '/': typeof AuthenticatedDashboardIndexRoute
+  '/backups': typeof AuthenticatedDashboardBackupsIndexRoute
+  '/schedules': typeof AuthenticatedDashboardSchedulesIndexRoute
+  '/servers': typeof AuthenticatedDashboardServersIndexRoute
   '/users': typeof AuthenticatedDashboardUsersIndexRoute
 }
 
@@ -236,9 +389,15 @@ export interface FileRoutesById {
   '/_authenticated/_dashboard': typeof AuthenticatedDashboardRouteRouteWithChildren
   '/_authentication/login': typeof AuthenticationLoginRoute
   '/_authentication/register': typeof AuthenticationRegisterRoute
+  '/_authenticated/_dashboard/backups': typeof AuthenticatedDashboardBackupsRouteRouteWithChildren
+  '/_authenticated/_dashboard/schedules': typeof AuthenticatedDashboardSchedulesRouteRouteWithChildren
+  '/_authenticated/_dashboard/servers': typeof AuthenticatedDashboardServersRouteRouteWithChildren
   '/_authenticated/_dashboard/users': typeof AuthenticatedDashboardUsersRouteRouteWithChildren
   '/_authenticated/_dashboard/profile': typeof AuthenticatedDashboardProfileRoute
   '/_authenticated/_dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/_dashboard/backups/': typeof AuthenticatedDashboardBackupsIndexRoute
+  '/_authenticated/_dashboard/schedules/': typeof AuthenticatedDashboardSchedulesIndexRoute
+  '/_authenticated/_dashboard/servers/': typeof AuthenticatedDashboardServersIndexRoute
   '/_authenticated/_dashboard/users/': typeof AuthenticatedDashboardUsersIndexRoute
 }
 
@@ -248,12 +407,27 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/register'
+    | '/backups'
+    | '/schedules'
+    | '/servers'
     | '/users'
     | '/profile'
     | '/'
+    | '/backups/'
+    | '/schedules/'
+    | '/servers/'
     | '/users/'
   fileRoutesByTo: FileRoutesByTo
-  to: '' | '/login' | '/register' | '/profile' | '/' | '/users'
+  to:
+    | ''
+    | '/login'
+    | '/register'
+    | '/profile'
+    | '/'
+    | '/backups'
+    | '/schedules'
+    | '/servers'
+    | '/users'
   id:
     | '__root__'
     | '/_authenticated'
@@ -261,9 +435,15 @@ export interface FileRouteTypes {
     | '/_authenticated/_dashboard'
     | '/_authentication/login'
     | '/_authentication/register'
+    | '/_authenticated/_dashboard/backups'
+    | '/_authenticated/_dashboard/schedules'
+    | '/_authenticated/_dashboard/servers'
     | '/_authenticated/_dashboard/users'
     | '/_authenticated/_dashboard/profile'
     | '/_authenticated/_dashboard/'
+    | '/_authenticated/_dashboard/backups/'
+    | '/_authenticated/_dashboard/schedules/'
+    | '/_authenticated/_dashboard/servers/'
     | '/_authenticated/_dashboard/users/'
   fileRoutesById: FileRoutesById
 }
@@ -309,6 +489,9 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/_dashboard/route.tsx",
       "parent": "/_authenticated",
       "children": [
+        "/_authenticated/_dashboard/backups",
+        "/_authenticated/_dashboard/schedules",
+        "/_authenticated/_dashboard/servers",
         "/_authenticated/_dashboard/users",
         "/_authenticated/_dashboard/profile",
         "/_authenticated/_dashboard/"
@@ -321,6 +504,27 @@ export const routeTree = rootRoute
     "/_authentication/register": {
       "filePath": "_authentication/register.tsx",
       "parent": "/_authentication"
+    },
+    "/_authenticated/_dashboard/backups": {
+      "filePath": "_authenticated/_dashboard/backups/route.tsx",
+      "parent": "/_authenticated/_dashboard",
+      "children": [
+        "/_authenticated/_dashboard/backups/"
+      ]
+    },
+    "/_authenticated/_dashboard/schedules": {
+      "filePath": "_authenticated/_dashboard/schedules/route.tsx",
+      "parent": "/_authenticated/_dashboard",
+      "children": [
+        "/_authenticated/_dashboard/schedules/"
+      ]
+    },
+    "/_authenticated/_dashboard/servers": {
+      "filePath": "_authenticated/_dashboard/servers/route.tsx",
+      "parent": "/_authenticated/_dashboard",
+      "children": [
+        "/_authenticated/_dashboard/servers/"
+      ]
     },
     "/_authenticated/_dashboard/users": {
       "filePath": "_authenticated/_dashboard/users/route.tsx",
@@ -336,6 +540,18 @@ export const routeTree = rootRoute
     "/_authenticated/_dashboard/": {
       "filePath": "_authenticated/_dashboard/index.tsx",
       "parent": "/_authenticated/_dashboard"
+    },
+    "/_authenticated/_dashboard/backups/": {
+      "filePath": "_authenticated/_dashboard/backups/index.tsx",
+      "parent": "/_authenticated/_dashboard/backups"
+    },
+    "/_authenticated/_dashboard/schedules/": {
+      "filePath": "_authenticated/_dashboard/schedules/index.tsx",
+      "parent": "/_authenticated/_dashboard/schedules"
+    },
+    "/_authenticated/_dashboard/servers/": {
+      "filePath": "_authenticated/_dashboard/servers/index.tsx",
+      "parent": "/_authenticated/_dashboard/servers"
     },
     "/_authenticated/_dashboard/users/": {
       "filePath": "_authenticated/_dashboard/users/index.tsx",
