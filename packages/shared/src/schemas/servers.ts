@@ -1,4 +1,6 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { z } from "zod";
 
 export const servers = sqliteTable("servers", {
   id: text("id").primaryKey(),
@@ -21,4 +23,10 @@ export const servers = sqliteTable("servers", {
   autoRestart: integer("auto_start", { mode: "boolean" }).notNull().default(false),
   createdAt: integer("created_at").notNull().$defaultFn(() => new Date().getTime()),
   updatedAt: integer("updated_at").notNull().$defaultFn(() => new Date().getTime()),
+});
+
+export const selectServerSchema = createSelectSchema(servers);
+
+export const insertServerSchema = createInsertSchema(servers, {
+  name: z.string().min(1, { message: "Name is required" }).min(3, { message: "Name must be at least 3 characters long" }),
 });
