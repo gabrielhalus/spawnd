@@ -1,7 +1,3 @@
-<div align="left">
-  <img src="https://cdn.discordapp.com/attachments/1384503521407275052/1384506614517858317/spawnd.svg?ex=6852adc3&is=68515c43&hm=2ece36452269ad34224bc2ea68993a34a727fab66752574d39dec83c650dbfb5&" alt="Spawnd Logo" />
-</div>
-
 <p align="left">
   <img src="https://img.shields.io/badge/Bun-%23000000.svg?style=for-the-badge&logo=bun&logoColor=white" alt="Bun Badge" />
   <img src="https://img.shields.io/badge/Hono-FF7E1B?style=for-the-badge&logo=hono&logoColor=white" alt="Hono Badge" />
